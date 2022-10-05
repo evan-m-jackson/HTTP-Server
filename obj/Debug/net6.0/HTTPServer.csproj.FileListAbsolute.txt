@@ -1,0 +1,15 @@
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/bin/Debug/net6.0/HTTPServer
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/bin/Debug/net6.0/HTTPServer.deps.json
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/bin/Debug/net6.0/HTTPServer.runtimeconfig.json
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/bin/Debug/net6.0/HTTPServer.dll
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/bin/Debug/net6.0/HTTPServer.pdb
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/obj/Debug/net6.0/HTTPServer.csproj.AssemblyReference.cache
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/obj/Debug/net6.0/HTTPServer.GeneratedMSBuildEditorConfig.editorconfig
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/obj/Debug/net6.0/HTTPServer.AssemblyInfoInputs.cache
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/obj/Debug/net6.0/HTTPServer.AssemblyInfo.cs
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/obj/Debug/net6.0/HTTPServer.csproj.CoreCompileInputs.cache
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/obj/Debug/net6.0/HTTPServer.dll
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/obj/Debug/net6.0/refint/HTTPServer.dll
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/obj/Debug/net6.0/HTTPServer.pdb
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/obj/Debug/net6.0/HTTPServer.genruntimeconfig.cache
+/Users/evans8thlightcomputer/Projects/HTTPServer/HTTPServer/obj/Debug/net6.0/ref/HTTPServer.dll
