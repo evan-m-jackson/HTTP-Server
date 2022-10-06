@@ -1,33 +1,33 @@
-﻿using System.Net;
-using System.Text;
+﻿using System.ComponentModel;
+using System;
+using System.Net;
+using System.Net.Sockets;
 
-HttpListener listener = new HttpListener();
-listener.Prefixes.Add("http://localhost:8000/");
+namespace sockets
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        { 
+            TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 5000);
 
-listener.Start();
+            listener.Start();
 
-Console.WriteLine("Listening...");
+            Console.WriteLine("Waiting for Client...");
+            while (true)
+            {
+                Socket socket = listener.AcceptSocket();
+                NetworkStream stream = new NetworkStream(socket);
+                StreamReader reader = new StreamReader(stream);
+                StreamWriter writer = new StreamWriter(stream);
 
-HttpListenerContext context = listener.GetContext();
-HttpListenerRequest request = context.Request;
+                string text = reader.ReadLine();
+                
+                writer.WriteLine("Hello World!");
+                stream.Close();
+                socket.Close();
+            }
 
-HttpListenerResponse response = context.Response;
-
-Console.WriteLine(request.Url.ToString());
-Console.WriteLine(request.HttpMethod);
-Console.WriteLine(request.UserHostName);
-Console.WriteLine(request.UserAgent);
-
-string responseString = "Hello World!";
-byte[] buffer = Encoding.UTF8.GetBytes(responseString);
-
-response.ContentLength64 = responseString.Length;
-
-System.IO.Stream output = response.OutputStream;
-
-output.Write(buffer, 0, buffer.Length);
-
-output.Close();
-
-listener.Stop();
-
+        }
+    }
+}
