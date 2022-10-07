@@ -44,6 +44,7 @@ namespace server
         public static void Main(string[] args)
         {
         TcpListener listener = null;
+        
         try
         {
             int port = 5000;
