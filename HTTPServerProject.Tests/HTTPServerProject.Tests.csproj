@@ -22,4 +22,7 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HTTPServerProject\HTTPServer.csproj" />
+  </ItemGroup>
 </Project>
