@@ -2,10 +2,9 @@ name: .NET
 
 on:
   push:
-    branches: 
-      - "**"
+    branches: [ "main" ]
   pull_request:
-      - "**"
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -21,6 +20,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore HTTPServerProject
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore HTTPServerProject
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal HTTPServerProject.Tests
