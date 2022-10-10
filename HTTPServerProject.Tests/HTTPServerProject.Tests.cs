@@ -9,12 +9,40 @@ namespace HTTPServerProject.Tests;
 public class HTTPServerProjectTests
 {
     [Fact]
-    public void Test1()
+    public void ServerTest()
     {
-        TcpClient client = null;
+        object client = new object();
 
-        Server server = new Server(client);
+        TestServer server = new TestServer(client);
 
         Assert.NotNull(server);
+    }
+
+    [Fact]
+    public void SocketTest()
+    {
+        object client = new object();
+
+        TestSocket socket = new TestSocket(client);
+
+        Assert.NotNull(socket);
+    }
+}
+
+
+
+public class TestServer 
+{
+    public TestServer(object client)
+    {
+
+    }
+}
+
+public class TestSocket
+{
+    public TestSocket(object client)
+    {
+        
     }
 }
