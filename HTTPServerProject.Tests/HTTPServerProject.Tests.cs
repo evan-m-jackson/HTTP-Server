@@ -19,13 +19,13 @@ public class HTTPServerProjectTests
 
         socket.Stop();
 
-        bool socketIsOn = socket.socketStarted;
+        bool listenerIsOn = socket.listenerStarted;
 
-        Assert.False(socketIsOn);
+        Assert.False(listenerIsOn);
     }
 }
 
-public class TestServer 
+public class TestServer
 {
     public TestServer(object client)
     {
@@ -44,19 +44,21 @@ public class TestConversation
 
 public class TestSocket
 {
-    public bool socketStarted = new bool();
+    public bool listenerStarted = new bool();
 
     public TestSocket(object client)
     {
-        object test_client = client;
+        object listener = client;
     }
 
-    public void Start(){
-        socketStarted = true;
+    public void Start()
+    {
+        listenerStarted = true;
     }
 
-    public void Stop(){
-        socketStarted = false;
+    public void Stop()
+    {
+        listenerStarted = false;
     }
 
 }
