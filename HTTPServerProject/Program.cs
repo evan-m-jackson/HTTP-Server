@@ -3,13 +3,14 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using Socket;
 
 namespace HTTPServerProject
 {
     public class Server
     {
 
-        TcpClient client = null;
+        TcpClient client = null!;
 
         public Server(TcpClient tcpc)
         {
@@ -24,7 +25,7 @@ namespace HTTPServerProject
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);
 
-            string input = reader.ReadLine();
+            string input = reader.ReadLine()!;
 
             while (input != "quit")
                 {
@@ -32,7 +33,7 @@ namespace HTTPServerProject
                     writer.WriteLine(input);
                     writer.Flush();
                     Console.WriteLine("Message sent back: " + input);
-                    input = reader.ReadLine();
+                    input = reader.ReadLine()!;
                 }
 
             Console.WriteLine("Closing the connection.");
@@ -43,14 +44,14 @@ namespace HTTPServerProject
 
         public static void Main(string[] args)
         {
-        TcpListener listener = null;
+        int port = 5000;
+        TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
         
         try
         {
-            int port = 5000;
-                listener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
-    
-                listener.Start();
+                TcpSocket socket = new TcpSocket(listener);
+
+                socket.Start();
     
                 Console.WriteLine("Server running on port {0}", port);
     
@@ -62,15 +63,14 @@ namespace HTTPServerProject
     
                     serverThread.Start();
                 }
+
+                socket.Stop();
         }
         catch (Exception e)
         {
             Console.WriteLine(e + " " + e.StackTrace);
         }
-        finally
-        {
-            listener.Stop();
-        }
+        
         }
     }
 }
