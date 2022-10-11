@@ -9,27 +9,21 @@ namespace HTTPServerProject.Tests;
 public class HTTPServerProjectTests
 {
     [Fact]
-    public void ServerTest()
-    {
-        object client = new object();
-
-        TestServer server = new TestServer(client);
-
-        Assert.NotNull(server);
-    }
-
-    [Fact]
     public void SocketTest()
     {
-        object client = new object();
+        object listener = new object();
 
-        TestSocket socket = new TestSocket(client);
+        TestSocket socket = new TestSocket(listener);
 
-        Assert.NotNull(socket);
+        socket.Start();
+
+        socket.Stop();
+
+        bool socketIsOn = socket.socketStarted;
+
+        Assert.False(socketIsOn);
     }
 }
-
-
 
 public class TestServer 
 {
@@ -39,10 +33,30 @@ public class TestServer
     }
 }
 
+public class TestConversation
+{
+    public TestConversation(object server)
+    {
+        object test_server = server;
+    }
+
+}
+
 public class TestSocket
 {
+    public bool socketStarted = new bool();
+
     public TestSocket(object client)
     {
-        
+        object test_client = client;
     }
+
+    public void Start(){
+        socketStarted = true;
+    }
+
+    public void Stop(){
+        socketStarted = false;
+    }
+
 }
