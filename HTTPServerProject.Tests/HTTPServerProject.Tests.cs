@@ -6,59 +6,50 @@ using System.IO;
 
 namespace HTTPServerProject.Tests;
 
-public class HTTPServerProjectTests
+public class IntegrationTestForServer
 {
+
     [Fact]
-    public void SocketTest()
+    public void TestStartupConnectAndShutdown()
     {
-        object listener = new object();
 
-        TestSocket socket = new TestSocket(listener);
+        Thread serverThread = new Thread(new ThreadStart(RunServer));
+        Thread clientThread = new Thread(new ThreadStart(RunClient));
 
-        socket.Start();
+        serverThread.Start();
+        clientThread.Start();
 
-        socket.Stop();
-
-        bool listenerIsOn = socket.listenerStarted;
-
-        Assert.False(listenerIsOn);
-    }
-}
-
-public class TestServer
-{
-    public TestServer(object client)
-    {
 
     }
-}
 
-public class TestConversation
-{
-    public TestConversation(object server)
+    private static void RunServer()
     {
-        object test_server = server;
+        Server.Main(Array.Empty<String>());
     }
 
-}
-
-public class TestSocket
-{
-    public bool listenerStarted = new bool();
-
-    public TestSocket(object client)
+    private static void RunClient()
     {
-        object listener = client;
-    }
+        Console.WriteLine("Starting client...");
 
-    public void Start()
-    {
-        listenerStarted = true;
-    }
+        TcpClient client = new TcpClient("127.0.0.1", 5000);
+        NetworkStream stream = client.GetStream();
+        StreamReader reader = new StreamReader(stream);
+        StreamWriter writer = new StreamWriter(stream);
 
-    public void Stop()
-    {
-        listenerStarted = false;
+
+        String input = "Hello World!";
+
+        while (input != "quit")
+        {
+            writer.WriteLine(input);
+            writer.Flush();
+
+            input = "quit";
+        }
+
+        writer.WriteLine("quit");
+        writer.Flush();
     }
 
 }
+
