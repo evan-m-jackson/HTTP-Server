@@ -14,11 +14,18 @@ public class IntegrationTestForServer
     {
 
         Thread serverThread = new Thread(new ThreadStart(RunServer));
-        Thread clientThread = new Thread(new ThreadStart(RunClient));
+
+        string expected = "Hello World";
+        string result = null!;
+
+        Thread clientThread = new Thread(() => { result = RunClient(expected); });
 
         serverThread.Start();
         clientThread.Start();
 
+        clientThread.Join();
+
+        Assert.Equal(expected, result);
 
     }
 
@@ -27,7 +34,7 @@ public class IntegrationTestForServer
         Server.Main(Array.Empty<String>());
     }
 
-    private static void RunClient()
+    private static string RunClient(string input)
     {
         Console.WriteLine("Starting client...");
 
@@ -36,20 +43,14 @@ public class IntegrationTestForServer
         StreamReader reader = new StreamReader(stream);
         StreamWriter writer = new StreamWriter(stream);
 
-
-        String input = "Hello World!";
-
-        while (input != "quit")
-        {
-            writer.WriteLine(input);
-            writer.Flush();
-
-            input = "quit";
-        }
-
-        writer.WriteLine("quit");
+        writer.WriteLine(input);
         writer.Flush();
+
+        string result = reader.ReadLine()!;
+
+        return result;
     }
+
 
 }
 
