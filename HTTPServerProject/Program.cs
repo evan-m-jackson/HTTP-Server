@@ -9,7 +9,7 @@ namespace HTTPServerProject
     public class Server
     {
 
-        TcpClient client = null;
+        TcpClient client = null!;
 
         public Server(TcpClient tcpc)
         {
@@ -24,16 +24,16 @@ namespace HTTPServerProject
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);
 
-            string input = reader.ReadLine();
+            string input = reader.ReadLine()!;
 
             while (input != "quit")
-                {
-                    Console.WriteLine("Message received: " + input);
-                    writer.WriteLine(input);
-                    writer.Flush();
-                    Console.WriteLine("Message sent back: " + input);
-                    input = reader.ReadLine();
-                }
+            {
+                Console.WriteLine("Message received: " + input);
+                writer.WriteLine(input);
+                writer.Flush();
+                Console.WriteLine("Message sent back: " + input);
+                input = reader.ReadLine()!;
+            }
 
             Console.WriteLine("Closing the connection.");
             reader.Close();
@@ -43,34 +43,35 @@ namespace HTTPServerProject
 
         public static void Main(string[] args)
         {
-        TcpListener listener = null;
-        
-        try
-        {
             int port = 5000;
-                listener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
-    
+            TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
+
+            try
+            {
+
                 listener.Start();
-    
+
                 Console.WriteLine("Server running on port {0}", port);
-    
+
                 while (true)
                 {
                     Server server = new Server(listener.AcceptTcpClient());
-    
+
                     Thread serverThread = new Thread(new ThreadStart(server.Conversation));
-    
+
                     serverThread.Start();
                 }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e + " " + e.StackTrace);
-        }
-        finally
-        {
-            listener.Stop();
-        }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e + " " + e.StackTrace);
+            }
+            finally
+            {
+                listener.Stop();
+            }
+
         }
     }
 }
