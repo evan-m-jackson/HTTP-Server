@@ -51,35 +51,29 @@ namespace HTTPServerProject.Interfaces
         }
     }
 
-
-    public class TestStreamReader
+    public class TestStreamReader : NewStreamReader
     {
         Stream emptyStream = null!;
         StreamReader reader = null!;
-        string[]? emptyArr = null;
+        List<string> emptyArr = null!;
         public TestStreamReader(Stream stream = null!, List<string> arr = null!)
         {
             stream = emptyStream;
             reader = new StreamReader(stream);
-
-            if (arr == null)
-            {
-                arr = new List<string>();
-            }
+            arr = emptyArr;
         }
-        public string ReadLine()
+        public override string ReadLine()
         {
             string input = arr[0];
             arr.RemoveAt(0);
             return input;
         }
 
-        public void Close()
+        public override void Close()
         {
 
         }
     }
     
-
 
 }
