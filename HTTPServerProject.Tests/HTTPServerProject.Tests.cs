@@ -3,6 +3,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using HTTPServerProject.Interfaces;
 
 namespace HTTPServerProject.Tests;
 
@@ -26,7 +27,6 @@ public class IntegrationTestForServer
         clientThread.Join();
 
         Assert.Equal(expected, result);
-
     }
 
     private static void RunServer()
@@ -53,4 +53,22 @@ public class IntegrationTestForServer
 
 
 }
+
+public class UnitTestsForConversation
+{
+    public List<string> request = new List<string>(){"GET / HTTP/1.1", "Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*", null!, "quit"};
+
+    [Fact]
+    public void GetInitialLineTest()
+    {
+        var expected = "GET / HTTP/1.1";
+        TestStreamReader reader = new TestStreamReader(request);
+        var input = reader.ReadLine();
+        
+        Assert.Equal(input, expected);
+
+    }
+
+}
+
 
