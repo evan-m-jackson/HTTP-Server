@@ -3,6 +3,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using HTTPServerProject.Interfaces;
 
 namespace HTTPServerProject
 {
@@ -20,11 +21,11 @@ namespace HTTPServerProject
         {
             Console.WriteLine("Connection accepted.");
 
-            NetworkStream stream = client.GetStream();
-            StreamReader reader = new StreamReader(stream);
-            StreamWriter writer = new StreamWriter(stream);
+            var stream = client.GetStream();
+            var reader = new MyStreamReader(stream: stream);
+            var writer = new StreamWriter(stream);
 
-            string input = reader.ReadLine()!;
+            var input = reader.ReadLine()!;
 
             while (input != "quit")
             {
