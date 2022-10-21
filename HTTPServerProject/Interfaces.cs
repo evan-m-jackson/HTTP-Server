@@ -12,15 +12,15 @@ namespace HTTPServerProject.Interfaces
     }
     public abstract class NewStreamReader : INewStreamReader
     {
-        Stream emptyStream = null!;
-        StreamReader reader = null!;
-        List<string> emptyArr = null!;
-        
-        public NewStreamReader(Stream stream = null!, List<string> arr = null!)
+        Stream rStream = new MemoryStream();
+        StreamReader reader = default!;
+        List<string> rArr = default!;
+
+        public NewStreamReader(Stream stream, List<string> arr = default!)
         {
-            stream = emptyStream;
+            rStream = stream;
             reader = new StreamReader(stream);
-            arr = emptyArr;
+            rArr = arr;
         }
 
         public abstract string ReadLine();
@@ -30,14 +30,14 @@ namespace HTTPServerProject.Interfaces
 
     public class MyStreamReader : NewStreamReader
     {
-        Stream emptyStream = null!;
-        StreamReader reader = null!;
-        List<string> emptyArr = null!;
-        public MyStreamReader(Stream stream = null!, List<string> arr = null!)
+        Stream rStream = new MemoryStream();
+        StreamReader reader = default!;
+        List<string> rArr = default!;
+        public MyStreamReader(Stream stream, List<string> arr = default!) : base(stream, arr)
         {
-            stream = emptyStream;
+            rStream = stream;
             reader = new StreamReader(stream);
-            arr = emptyArr;
+            rArr = arr;
         }
         public override string ReadLine()
         {
@@ -53,19 +53,20 @@ namespace HTTPServerProject.Interfaces
 
     public class TestStreamReader : NewStreamReader
     {
-        Stream emptyStream = null!;
-        StreamReader reader = null!;
-        List<string> emptyArr = null!;
-        public TestStreamReader(Stream stream = null!, List<string> arr = null!)
+        Stream rStream = new MemoryStream();
+        StreamReader reader = default!;
+        List<string> rArr = default!;
+        public TestStreamReader(Stream stream, List<string> arr = default!) : base(stream, arr)
         {
-            stream = emptyStream;
+            rStream = stream;
             reader = new StreamReader(stream);
-            arr = emptyArr;
+            rArr = arr;
+
         }
         public override string ReadLine()
         {
-            string input = arr[0];
-            arr.RemoveAt(0);
+            string input = rArr[0];
+            rArr.RemoveAt(0);
             return input;
         }
 
@@ -74,6 +75,6 @@ namespace HTTPServerProject.Interfaces
 
         }
     }
-    
+
 
 }

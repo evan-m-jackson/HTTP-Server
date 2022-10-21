@@ -62,7 +62,8 @@ public class UnitTestsForConversation
     public void GetInitialLineTest()
     {
         var expected = "GET / HTTP/1.1";
-        TestStreamReader reader = new TestStreamReader(request);
+        var stream = new MemoryStream();
+        TestStreamReader reader = new TestStreamReader(stream, arr: request);
         var input = reader.ReadLine();
 
         Assert.Equal(input, expected);
