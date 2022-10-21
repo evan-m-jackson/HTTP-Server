@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using HTTPServerProject.Interfaces;
+using HTTPServerProject.Headers;
 
 namespace HTTPServerProject.Tests;
 
@@ -56,19 +57,37 @@ public class IntegrationTestForServer
 
 public class UnitTestsForConversation
 {
-    public List<string> request = new List<string>() { "GET / HTTP/1.1", "Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*", null!, "quit" };
+    public List<string> request = new List<string>() { "GET / HTTP/1.1", "Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*", "", "quit" };
 
     [Fact]
     public void GetInitialLineTest()
     {
         var expected = "GET / HTTP/1.1";
         var stream = new MemoryStream();
-        TestStreamReader reader = new TestStreamReader(stream, arr: request);
-        var input = reader.ReadLine();
+        var reader = new TestStreamReader(stream, arr: request);
 
-        Assert.Equal(input, expected);
+        Header header = new Header(reader);
+        var initialLine = header.GetLine();
+
+        Assert.Equal(initialLine, expected);
 
     }
+
+    [Fact]
+    public void GetHeadersTest()
+    {
+        var expected = new List<string>() {"Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*"};
+        var stream = new MemoryStream();
+        var reader = new TestStreamReader(stream, arr: request);
+
+        Header header = new Header(reader);
+        var initialLine = header.GetLine();
+        var headers = header.GetHeaders();
+
+        Assert.Equal(headers, expected);
+
+    }
+    
 
 }
 
