@@ -18,11 +18,10 @@ namespace HTTPServerProject.Interfaces
         List<string> sArr = default!;
         List<int> iArr = default!;
 
-        public NewStreamReader(Stream stream, List<string> arr = default!)
+        public NewStreamReader(Stream stream)
         {
             rStream = stream;
             reader = new StreamReader(stream);
-            sArr = arr;
         }
 
         public NewStreamReader(List<string> arr)
