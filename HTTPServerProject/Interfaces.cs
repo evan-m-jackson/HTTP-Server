@@ -38,6 +38,8 @@ namespace HTTPServerProject.Interfaces
 
         public abstract string ReadToEnd();
 
+        public abstract int Read();
+
         public abstract void Close();
     }
 
@@ -72,6 +74,12 @@ namespace HTTPServerProject.Interfaces
         public override string ReadToEnd()
         {
             var input = reader.ReadToEnd();
+            return input;
+        }
+
+        public override int Read()
+        {
+            var input = reader.Read();
             return input;
         }
 
@@ -112,6 +120,32 @@ namespace HTTPServerProject.Interfaces
         public override string ReadToEnd()
         {
             return "Hello";
+        }
+
+        public override int Read()
+        {
+            var input = sArr[0];
+            if(input == "")
+            {
+                return -1;
+            }
+            else
+            {
+                var c = input[0];
+                var ascii_c = (int) c;
+                
+                if (input.Length > 1)
+                {
+                    sArr[0] = input.Substring(1);
+                    Console.WriteLine(input);
+                }
+                else
+                {
+                    sArr[0] = "";
+                }
+                
+                return ascii_c;
+            }
         }
 
         public override void Close()

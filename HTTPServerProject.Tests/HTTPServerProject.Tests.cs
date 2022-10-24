@@ -5,29 +5,30 @@ using System.Net.Sockets;
 using System.IO;
 using HTTPServerProject.Interfaces;
 using HTTPServerProject.Headers;
+using HTTPServerProject.Request.Body;
 
 namespace HTTPServerProject.Tests;
 
 public class IntegrationTestForServer
 {
 
-    [Fact]
-    public void TestStartupConnectAndShutdown()
-    {
+    // [Fact]
+    // public void TestStartupConnectAndShutdown()
+    // {
 
-        Thread serverThread = new Thread(new ThreadStart(RunServer));
+    //     Thread serverThread = new Thread(new ThreadStart(RunServer));
 
-        string expected = "Hello World";
-        string result = null!;
+    //     string expected = "Hello World";
+    //     string result = null!;
 
-        Thread clientThread = new Thread(() => { result = RunClient(expected); });
+    //     Thread clientThread = new Thread(() => { result = RunClient(expected); });
 
-        serverThread.Start();
-        clientThread.Start();
+    //     serverThread.Start();
+    //     clientThread.Start();
 
-        clientThread.Join();
-        Assert.Equal(expected, result);
-    }
+    //     clientThread.Join();
+    //     Assert.Equal(expected, result);
+    // }
 
     private static void RunServer()
     {
@@ -62,7 +63,6 @@ public class UnitTestsForConversation
     public void GetInitialLineTest()
     {
         var expected = "GET / HTTP/1.1";
-        var stream = new MemoryStream();
         var reader = new TestStreamReader(request);
 
         Header header = new Header(reader);
@@ -76,7 +76,6 @@ public class UnitTestsForConversation
     public void GetHeadersTest()
     {
         var expected = new List<string>() {"Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*"};
-        var stream = new MemoryStream();
         var reader = new TestStreamReader(request);
 
         Header header = new Header(reader);
@@ -85,6 +84,21 @@ public class UnitTestsForConversation
 
         Assert.Equal(headers, expected);
 
+    }
+
+    [Fact]
+    public void GetBodyTest()
+    {
+        var reader = new TestStreamReader(request);
+
+        Header header = new Header(reader);
+        var initialLine = header.GetLine();
+        var headers = header.GetHeaders();
+
+        Body body = new Body(reader);
+        string expected = body.GetBody();
+
+        Assert.Equal(expected, "quit");
     }
     
 
