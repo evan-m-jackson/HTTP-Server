@@ -26,7 +26,6 @@ public class IntegrationTestForServer
         clientThread.Start();
 
         clientThread.Join();
-
         Assert.Equal(expected, result);
     }
 
@@ -41,14 +40,14 @@ public class IntegrationTestForServer
 
         TcpClient client = new TcpClient("127.0.0.1", 5000);
         NetworkStream stream = client.GetStream();
-        StreamReader reader = new StreamReader(stream);
+        MyStreamReader reader = new MyStreamReader(stream);
         StreamWriter writer = new StreamWriter(stream);
 
         writer.WriteLine(input);
         writer.Flush();
 
         string result = reader.ReadLine()!;
-
+        Console.WriteLine(result);
         return result;
     }
 
@@ -86,19 +85,6 @@ public class UnitTestsForConversation
 
         Assert.Equal(headers, expected);
 
-    }
-
-    [Fact]
-    public void GetBody()
-    {
-        var helloList = new List<int>() {72, 101, 108, 108, 111};
-        var stream = new MemoryStream();
-        var reader = new TestStreamReader(helloList);
-
-        Body body = new Body(reader);
-        var body = body.GetBody();
-
-        Assert.Equal(body, "Hello");
     }
     
 

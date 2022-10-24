@@ -36,7 +36,7 @@ namespace HTTPServerProject.Interfaces
 
         public abstract string ReadLine();
 
-        public abstract int Read();
+        public abstract string ReadToEnd();
 
         public abstract void Close();
     }
@@ -69,9 +69,9 @@ namespace HTTPServerProject.Interfaces
             return input;
         }
 
-        public override int Read()
+        public override string ReadToEnd()
         {
-            var input = reader.Read();
+            var input = reader.ReadToEnd();
             return input;
         }
 
@@ -109,9 +109,9 @@ namespace HTTPServerProject.Interfaces
             return input;
         }
 
-        public override int Read()
+        public override string ReadToEnd()
         {
-            return 0;
+            return "Hello";
         }
 
         public override void Close()

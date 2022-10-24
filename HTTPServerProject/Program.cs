@@ -32,7 +32,7 @@ namespace HTTPServerProject
             var initialLine = header.GetLine();
             var rHeader = header.GetHeaders();
 
-            var input = reader.ReadLine()!;
+            var input = reader.ReadLine();
 
             while (input != null)
             {
@@ -40,7 +40,7 @@ namespace HTTPServerProject
                 writer.WriteLine(input);
                 writer.Flush();
                 Console.WriteLine("Message sent back: " + input);
-                input = reader.ReadLine()!;
+                input = reader.ReadLine();
             }
 
             Console.WriteLine("Closing the connection.");
