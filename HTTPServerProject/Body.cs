@@ -19,7 +19,7 @@ namespace HTTPServerProject.Request.Body
         {
             var input = reader.Read();
             var result = "";
-            while(input != -1)
+            while (input != -1)
             {
                 char c = (char)input;
                 result += c;

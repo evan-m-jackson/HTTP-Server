@@ -75,7 +75,7 @@ public class UnitTestsForConversation
     [Fact]
     public void GetHeadersTest()
     {
-        var expected = new List<string>() {"Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*"};
+        var expected = new List<string>() { "Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*" };
         var reader = new TestStreamReader(request);
 
         Header header = new Header(reader);
@@ -98,9 +98,9 @@ public class UnitTestsForConversation
         Body body = new Body(reader);
         string expected = body.GetBody();
 
-        Assert.Equal(expected, "quit");
+        Assert.Equal("quit", expected);
     }
-    
+
 
 }
 

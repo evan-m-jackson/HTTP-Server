@@ -125,15 +125,15 @@ namespace HTTPServerProject.Interfaces
         public override int Read()
         {
             var input = sArr[0];
-            if(input == "")
+            if (input == "")
             {
                 return -1;
             }
             else
             {
                 var c = input[0];
-                var ascii_c = (int) c;
-                
+                var ascii_c = (int)c;
+
                 if (input.Length > 1)
                 {
                     sArr[0] = input.Substring(1);
@@ -143,7 +143,7 @@ namespace HTTPServerProject.Interfaces
                 {
                     sArr[0] = "";
                 }
-                
+
                 return ascii_c;
             }
         }

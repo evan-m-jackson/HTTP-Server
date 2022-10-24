@@ -28,13 +28,13 @@ namespace HTTPServerProject.Headers
         {
             var input = reader.ReadLine();
 
-            while(input != "")
+            do
             {
                 headers.Add(input);
                 Console.WriteLine(input);
                 input = reader.ReadLine();
-            }
-
+            } while (input != "");
+            Console.WriteLine(headers);
             return headers;
         }
 
