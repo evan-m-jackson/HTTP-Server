@@ -9,8 +9,7 @@ namespace HTTPServerProject.Headers
 
     public class Header
     {
-        NewStreamReader reader = default;
-        string initialLine = default!;
+        NewStreamReader reader = default!;
         List<string> headers = new List<string>();
 
         public Header(NewStreamReader r)
@@ -21,6 +20,7 @@ namespace HTTPServerProject.Headers
         public string GetLine()
         {
             var line = reader.ReadLine();
+            Console.WriteLine(line);
             return line;
         }
 
@@ -31,6 +31,7 @@ namespace HTTPServerProject.Headers
             while(input != "")
             {
                 headers.Add(input);
+                Console.WriteLine(input);
                 input = reader.ReadLine();
             }
 

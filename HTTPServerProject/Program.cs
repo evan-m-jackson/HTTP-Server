@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using HTTPServerProject.Interfaces;
+using HTTPServerProject.Headers;
 
 namespace HTTPServerProject
 {
@@ -11,23 +12,29 @@ namespace HTTPServerProject
     {
 
         TcpClient client = null!;
+        NetworkStream stream = default!;
+        NewStreamReader reader = default!;
+        StreamWriter writer = default!;
 
         public Server(TcpClient tcpc)
         {
             client = tcpc;
+            stream = client.GetStream();
+            reader = new MyStreamReader(stream);
+            writer = new StreamWriter(stream);
         }
 
         public void Conversation()
         {
             Console.WriteLine("Connection accepted.");
 
-            var stream = client.GetStream();
-            var reader = new MyStreamReader(stream: stream);
-            var writer = new StreamWriter(stream);
+            Header header = new Header(reader);
+            var initialLine = header.GetLine();
+            var rHeader = header.GetHeaders();
 
             var input = reader.ReadLine()!;
 
-            while (input != "quit")
+            while (input != null)
             {
                 Console.WriteLine("Message received: " + input);
                 writer.WriteLine(input);
