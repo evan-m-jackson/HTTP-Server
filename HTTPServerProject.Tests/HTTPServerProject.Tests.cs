@@ -64,7 +64,7 @@ public class UnitTestsForConversation
     {
         var expected = "GET / HTTP/1.1";
         var stream = new MemoryStream();
-        var reader = new TestStreamReader(stream, arr: request);
+        var reader = new TestStreamReader(request);
 
         Header header = new Header(reader);
         var initialLine = header.GetLine();
@@ -78,7 +78,7 @@ public class UnitTestsForConversation
     {
         var expected = new List<string>() {"Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*"};
         var stream = new MemoryStream();
-        var reader = new TestStreamReader(stream, arr: request);
+        var reader = new TestStreamReader(request);
 
         Header header = new Header(reader);
         var initialLine = header.GetLine();
@@ -86,6 +86,19 @@ public class UnitTestsForConversation
 
         Assert.Equal(headers, expected);
 
+    }
+
+    [Fact]
+    public void GetBody()
+    {
+        var helloList = new List<int>() {72, 101, 108, 108, 111};
+        var stream = new MemoryStream();
+        var reader = new TestStreamReader(helloList);
+
+        Body body = new Body(reader);
+        var body = body.GetBody();
+
+        Assert.Equal(body, "Hello");
     }
     
 

@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.Collections.Generic;
 
 namespace HTTPServerProject.Interfaces
 {
@@ -14,16 +15,29 @@ namespace HTTPServerProject.Interfaces
     {
         Stream rStream = new MemoryStream();
         StreamReader reader = default!;
-        List<string> rArr = default!;
+        List<string> sArr = default!;
+        List<int> iArr = default!;
 
         public NewStreamReader(Stream stream, List<string> arr = default!)
         {
             rStream = stream;
             reader = new StreamReader(stream);
-            rArr = arr;
+            sArr = arr;
+        }
+
+        public NewStreamReader(List<string> arr)
+        {
+            sArr = arr;
+        }
+
+        public NewStreamReader(List<int> arr)
+        {
+            iArr = arr;
         }
 
         public abstract string ReadLine();
+
+        public abstract int Read();
 
         public abstract void Close();
     }
@@ -32,16 +46,33 @@ namespace HTTPServerProject.Interfaces
     {
         Stream rStream = new MemoryStream();
         StreamReader reader = default!;
-        List<string> rArr = default!;
-        public MyStreamReader(Stream stream, List<string> arr = default!) : base(stream, arr)
+        List<string> sArr = default!;
+        List<int> iArr = default!;
+        public MyStreamReader(Stream stream) : base(stream)
         {
             rStream = stream;
             reader = new StreamReader(stream);
-            rArr = arr;
         }
+
+        public MyStreamReader(List<string> arr) : base(arr)
+        {
+            sArr = arr;
+        }
+
+        public MyStreamReader(List<int> arr) : base(arr)
+        {
+            iArr = arr;
+        }
+
         public override string ReadLine()
         {
             string input = reader.ReadLine()!;
+            return input;
+        }
+
+        public override int Read()
+        {
+            var input = reader.Read();
             return input;
         }
 
@@ -55,19 +86,33 @@ namespace HTTPServerProject.Interfaces
     {
         Stream rStream = new MemoryStream();
         StreamReader reader = default!;
-        List<string> rArr = default!;
-        public TestStreamReader(Stream stream, List<string> arr = default!) : base(stream, arr)
+        List<string> sArr = default!;
+        List<int> iArr = default!;
+        public TestStreamReader(Stream stream) : base(stream)
         {
             rStream = stream;
             reader = new StreamReader(stream);
-            rArr = arr;
+        }
 
+        public TestStreamReader(List<string> arr) : base(arr)
+        {
+            sArr = arr;
+        }
+
+        public TestStreamReader(List<int> arr) : base(arr)
+        {
+            iArr = arr;
         }
         public override string ReadLine()
         {
-            string input = rArr[0];
-            rArr.RemoveAt(0);
+            string input = sArr[0];
+            sArr.RemoveAt(0);
             return input;
+        }
+
+        public override int Read()
+        {
+            return 0;
         }
 
         public override void Close()
