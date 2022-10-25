@@ -8,7 +8,7 @@ namespace HTTPServerProject.Request.Body
 {
     public class Body
     {
-        NewStreamReader reader = default;
+        NewStreamReader reader = default!;
 
         public Body(NewStreamReader r)
         {
@@ -17,14 +17,15 @@ namespace HTTPServerProject.Request.Body
 
         public string GetBody()
         {
-            var input = reader.Read();
+            int input = 0;
             var result = "";
-            while (input != -1)
+            while ((input = reader.Read()) != -1)
             {
                 char c = (char)input;
                 result += c;
                 input = reader.Read();
             }
+            
             return result;
         }
     }
