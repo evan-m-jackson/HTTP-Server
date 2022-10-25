@@ -17,9 +17,9 @@ namespace HTTPServerProject.Request.Body
 
         public string GetBody()
         {
-            int input = 0;
+            int input = reader.Read();
             var result = "";
-            while ((input = reader.Read()) != -1)
+            while ((input != -1))
             {
                 char c = (char)input;
                 result += c;
