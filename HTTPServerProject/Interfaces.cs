@@ -29,16 +29,13 @@ namespace HTTPServerProject.Interfaces
             sArr = arr;
         }
 
-        public NewStreamReader(List<int> arr)
-        {
-            iArr = arr;
-        }
-
         public abstract string ReadLine();
 
         public abstract string ReadToEnd();
 
         public abstract int Read();
+
+        public abstract int Peek();
 
         public abstract void Close();
     }
@@ -60,11 +57,6 @@ namespace HTTPServerProject.Interfaces
             sArr = arr;
         }
 
-        public MyStreamReader(List<int> arr) : base(arr)
-        {
-            iArr = arr;
-        }
-
         public override string ReadLine()
         {
             string input = reader.ReadLine()!;
@@ -80,6 +72,12 @@ namespace HTTPServerProject.Interfaces
         public override int Read()
         {
             var input = reader.Read();
+            return input;
+        }
+
+        public override int Peek()
+        {
+            var input = reader.Peek();
             return input;
         }
 
@@ -106,10 +104,6 @@ namespace HTTPServerProject.Interfaces
             sArr = arr;
         }
 
-        public TestStreamReader(List<int> arr) : base(arr)
-        {
-            iArr = arr;
-        }
         public override string ReadLine()
         {
             string input = sArr[0];
@@ -137,12 +131,27 @@ namespace HTTPServerProject.Interfaces
                 if (input.Length > 1)
                 {
                     sArr[0] = input.Substring(1);
-                    Console.WriteLine(input);
                 }
                 else
                 {
                     sArr[0] = "";
                 }
+
+                return ascii_c;
+            }
+        }
+
+        public override int Peek()
+        {
+            var input = sArr[0];
+            if (input == "")
+            {
+                return -1;
+            }
+            else
+            {
+                var c = input[0];
+                var ascii_c = (int)c;
 
                 return ascii_c;
             }
