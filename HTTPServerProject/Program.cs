@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.IO;
 using HTTPServerProject.Interfaces;
 using HTTPServerProject.Headers;
+using HTTPServerProject.Request.Body;
 
 namespace HTTPServerProject
 {
@@ -32,16 +33,13 @@ namespace HTTPServerProject
             var initialLine = header.GetLine();
             var rHeader = header.GetHeaders();
 
-            var input = reader.ReadLine();
+            Body body = new Body(reader);
+            var input = body.GetBody();
 
-            while (input != null)
-            {
-                Console.WriteLine("Message received: " + input);
-                writer.WriteLine(input);
-                writer.Flush();
-                Console.WriteLine("Message sent back: " + input);
-                input = reader.ReadLine();
-            }
+            Console.WriteLine("Message received: " + input);
+            writer.WriteLine(input);
+            writer.Flush();
+            Console.WriteLine("Message sent back: " + input);
 
             Console.WriteLine("Closing the connection.");
             reader.Close();
