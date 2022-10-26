@@ -2,17 +2,17 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.Interfaces;
+using HTTPServerProject.ReadStreams;
 
 namespace HTTPServerProject.Headers
 {
 
     public class Header
     {
-        NewStreamReader reader = default!;
+        IReadStreams reader = default!;
         List<string> headers = new List<string>();
 
-        public Header(NewStreamReader r)
+        public Header(IReadStreams r)
         {
             reader = r;
         }

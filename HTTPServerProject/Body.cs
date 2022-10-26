@@ -2,30 +2,31 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.Interfaces;
+using HTTPServerProject.ReadStreams;
 
 namespace HTTPServerProject.Request.Body
 {
     public class Body
     {
-        NewStreamReader reader = default!;
+        IReadStreams reader = default!;
 
-        public Body(NewStreamReader r)
+        public Body(IReadStreams r)
         {
             reader = r;
         }
 
         public string GetBody()
         {
-            int input = reader.Read();
+            int input = reader.Peek();
             var result = "";
-            while ((input != -1))
+            do
             {
-                char c = (char)input;
+                int r = reader.Read();
+                char c = (char)r;
                 result += c;
-                input = reader.Read();
-            }
-            
+                input = reader.Peek();
+            } while ((input != -1));
+
             return result;
         }
     }
