@@ -52,6 +52,9 @@ jobs:
         with:
           name: .net-app
 
+      - name: Start server
+        run: dotnet run --project HTTPServerProject
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
