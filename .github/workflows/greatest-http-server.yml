@@ -5,8 +5,10 @@ name: Build and deploy ASP.Net Core app to Azure Web App - greatest-http-server
 
 on:
   push:
-    branches:
-      - add-body-class
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
   workflow_dispatch:
 
 jobs:
@@ -23,7 +25,7 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build --no-restore HTTPServerProject
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
