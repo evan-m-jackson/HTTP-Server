@@ -3,7 +3,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.Interfaces;
+using HTTPServerProject.ReadStreams;
 using HTTPServerProject.Headers;
 using HTTPServerProject.Request.Body;
 
@@ -13,20 +13,18 @@ namespace HTTPServerProject
     {
 
         TcpClient client = null!;
-        NetworkStream stream = default!;
-        NewStreamReader reader = default!;
-        StreamWriter writer = default!;
 
         public Server(TcpClient tcpc)
         {
             client = tcpc;
-            stream = client.GetStream();
-            reader = new MyStreamReader(stream);
-            writer = new StreamWriter(stream);
         }
 
         public void Conversation()
         {
+            NetworkStream stream = client.GetStream();
+            StreamWriter writer = new StreamWriter(stream);
+            MyStreamReader reader = new MyStreamReader(stream);
+
             Console.WriteLine("Connection accepted.");
 
             Header header = new Header(reader);
@@ -42,6 +40,7 @@ namespace HTTPServerProject
             Console.WriteLine("Message sent back: " + input);
 
             Console.WriteLine("Closing the connection.");
+
             reader.Close();
             writer.Close();
             client.Close();
@@ -54,7 +53,7 @@ namespace HTTPServerProject
 
             try
             {
-
+                
                 listener.Start();
 
                 Console.WriteLine("Server running on port {0}", port);

@@ -3,7 +3,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.Interfaces;
+using HTTPServerProject.ReadStreams;
 using HTTPServerProject.Headers;
 using HTTPServerProject.Request.Body;
 
@@ -12,44 +12,43 @@ namespace HTTPServerProject.Tests;
 public class IntegrationTestForServer
 {
 
-    // [Fact]
-    // public void TestStartupConnectAndShutdown()
-    // {
+    [Fact]
+    public void TestStartupConnectAndShutdown()
+    {
 
-    //     Thread serverThread = new Thread(new ThreadStart(RunServer));
+        Thread serverThread = new Thread(new ThreadStart(RunServer));
 
-    //     string expected = "Hello World";
-    //     string result = null!;
+        string expected = "What's up?";
+        string result = string.Empty;
 
-    //     Thread clientThread = new Thread(() => { result = RunClient(expected); });
+        Thread clientThread = new Thread(() => { result = RunClient(expected); });
 
-    //     serverThread.Start();
-    //     clientThread.Start();
+        clientThread.Start();
+        serverThread.Start();
+        clientThread.Join();
 
-    //     clientThread.Join();
-    //     Assert.Equal(expected, result);
-    // }
+        Assert.Equal(expected, result);
+
+    }
 
     private static void RunServer()
     {
         Server.Main(Array.Empty<String>());
     }
 
-    private static string RunClient(string input)
+    public static string RunClient(string input)
     {
         Console.WriteLine("Starting client...");
 
         TcpClient client = new TcpClient("127.0.0.1", 5000);
         NetworkStream stream = client.GetStream();
-        MyStreamReader reader = new MyStreamReader(stream);
+        StreamReader reader = new StreamReader(stream);
         StreamWriter writer = new StreamWriter(stream);
 
         writer.WriteLine(input);
         writer.Flush();
 
-        string result = reader.ReadLine()!;
-        Console.WriteLine(result);
-        return result;
+        return input;
     }
 
 

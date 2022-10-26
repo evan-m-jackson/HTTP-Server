@@ -20,7 +20,6 @@ namespace HTTPServerProject.Headers
         public string GetLine()
         {
             var line = reader.ReadLine();
-            Console.WriteLine(line);
             return line;
         }
 
@@ -31,10 +30,9 @@ namespace HTTPServerProject.Headers
             do
             {
                 headers.Add(input);
-                Console.WriteLine(input);
                 input = reader.ReadLine();
             } while (input != "");
-            Console.WriteLine(headers);
+
             return headers;
         }
 
