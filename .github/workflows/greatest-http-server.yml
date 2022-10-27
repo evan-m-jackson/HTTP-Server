@@ -33,9 +33,6 @@ jobs:
       - name: Publish
         run: dotnet publish HTTPServerProject
 
-      - name: Run the Server
-        run: dotnet run --project HTTPServerProject &
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
@@ -63,3 +60,6 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2D8B0D8BFB6D43E7B630A6E72833180C }}
           package: .
+
+      - name: Run the Server
+        run: dotnet run --project HTTPServerProject &
