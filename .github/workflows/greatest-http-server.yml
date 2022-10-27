@@ -33,8 +33,8 @@ jobs:
       - name: Publish
         run: dotnet publish HTTPServerProject
 
-      - name: Run
-        run: dotnet run --project HTTPServerProject
+      - name: Run the Server
+        run: dotnet run --project HTTPServerProject &
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
