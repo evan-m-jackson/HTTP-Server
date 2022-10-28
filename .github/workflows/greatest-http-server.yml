@@ -60,6 +60,3 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2D8B0D8BFB6D43E7B630A6E72833180C }}
           package: .
-
-      - name: Run the Server
-        run: dotnet run --project HTTPServerProject &
