@@ -5,8 +5,10 @@ name: Build and deploy ASP.Net Core app to Azure Web App - greatest-http-server
 
 on:
   push:
-    branches:
-      - add-body-class
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
   workflow_dispatch:
 
 jobs:
@@ -22,17 +24,20 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Restore dependencies
+        run: dotnet restore HTTPServerProject
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      - name: Build with dotnet
+        run: dotnet build --no-restore HTTPServerProject
+
+      - name: Publish
+        run: dotnet publish HTTPServerProject
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: HTTPServerProject
 
   deploy:
     runs-on: ubuntu-latest
