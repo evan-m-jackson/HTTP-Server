@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using HTTPServerProject.ReadStreams;
-using HTTPServerProject.Headers;
+using HTTPServerProject.Request.Headers;
 using HTTPServerProject.Request.Body;
 
 namespace HTTPServerProject
