@@ -48,7 +48,7 @@ namespace HTTPServerProject
 
         public static void Main(string[] args)
         {
-            int port = 8080;
+            int port = 5000;
             TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
 
             try
