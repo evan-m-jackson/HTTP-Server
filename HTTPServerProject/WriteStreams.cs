@@ -45,9 +45,16 @@ namespace HTTPServerProject.WriteStreams
             sArr = arr;
         }
 
-        public void WriteLine(string str = "")
+        public void WriteLine(string str = default!)
         {
-            sArr.Add(str);
+            if(str == default!)
+            {
+                sArr.Add("");
+            }
+            else
+            {
+                sArr.Add(str);
+            }
         }
 
     }

@@ -4,9 +4,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using HTTPServerProject.ReadStreams;
-using HTTPServerProject.Headers;
+using HTTPServerProject.Request.Headers;
 using HTTPServerProject.Request.Body;
 using HTTPServerProject.WriteStreams;
+using HTTPServerProject.Responses;
 
 namespace HTTPServerProject.Tests;
 
@@ -55,12 +56,12 @@ public class IntegrationTestForServer
 
 }
 
-public class UnitTestsForConversation
+public class UnitTestsForRequests
 {
     public List<string> request = new List<string>() { "GET / HTTP/1.1", "Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*", "", "quit" };
 
     [Fact]
-    public void GetInitialLineTest()
+    public void GetRequestInitialLineTest()
     {
         var expected = "GET / HTTP/1.1";
         var reader = new TestStreamReader(request);
@@ -101,19 +102,37 @@ public class UnitTestsForConversation
         Assert.Equal("quit", expected);
     }
 
+
+}
+
+public class UnitTestsForResponses
+{
+    public List<string> eStream = new List<string>();
+
     [Fact]
    public void GiveResponseHeaderTest()
    {
-        var eStream = new List<string>();
         var expected = new List<string>() {"HTTP/1.1 200 OK", ""};
         var writer = new TestStreamWriter(eStream);
 
-        ResponseHeader resHeader = new ResponseHeader(writer);
-        resHeader.GiveResponseHeader();
+        Response response = new Response(writer);
+        response.WriteResponseHeader();
 
         Assert.Equal(eStream, expected); 
    }
 
+   [Fact]
+   public void GiveResponseBodyTest()
+   {
+        var expected = new List<string>() {"HTTP/1.1 200 OK", "", "Hello World!"};
+        var writer = new TestStreamWriter(eStream);
+        var input = "Hello World!";
+
+        Response response = new Response(writer);
+        response.WriteResponse(input);
+
+        Assert.Equal(eStream, expected);
+   }
 }
 
 
