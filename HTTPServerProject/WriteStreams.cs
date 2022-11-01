@@ -9,6 +9,8 @@ namespace HTTPServerProject.WriteStreams
     public interface IWriteStreams
     {
         void WriteLine(string str = default!);
+        void Flush();
+        void Close();
     }
 
     public class MyStreamWriter : IWriteStreams
@@ -34,6 +36,16 @@ namespace HTTPServerProject.WriteStreams
             }
         }
 
+        public void Flush()
+        {
+            writer.Flush();
+        }
+
+        public void Close()
+        {
+            writer.Close();
+        }
+
     }
 
     public class TestStreamWriter : IWriteStreams
@@ -57,5 +69,12 @@ namespace HTTPServerProject.WriteStreams
             }
         }
 
+        public void Flush()
+        {
+        }
+
+        public void Close()
+        {
+        }
     }
 }

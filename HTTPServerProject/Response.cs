@@ -19,6 +19,7 @@ namespace HTTPServerProject.Responses
         {
             WriteResponseHeader();
             writer.WriteLine(input);
+            writer.Flush();
         }
 
         public void WriteResponseHeader()

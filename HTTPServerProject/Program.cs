@@ -6,6 +6,8 @@ using System.IO;
 using HTTPServerProject.ReadStreams;
 using HTTPServerProject.Request.Headers;
 using HTTPServerProject.Request.Body;
+using HTTPServerProject.Responses;
+using HTTPServerProject.WriteStreams;
 
 namespace HTTPServerProject
 {
@@ -22,7 +24,7 @@ namespace HTTPServerProject
         public void Conversation()
         {
             NetworkStream stream = client.GetStream();
-            StreamWriter writer = new StreamWriter(stream);
+            MyStreamWriter writer = new MyStreamWriter(stream);
             MyStreamReader reader = new MyStreamReader(stream);
 
             Console.WriteLine("Connection accepted.");
@@ -34,9 +36,10 @@ namespace HTTPServerProject
             Body body = new Body(reader);
             var input = body.GetBody();
 
+            Response response = new Response(writer);
+            response.WriteResponse(input);
+
             Console.WriteLine("Message received: " + input);
-            writer.WriteLine(input);
-            writer.Flush();
             Console.WriteLine("Message sent back: " + input);
 
             Console.WriteLine("Closing the connection.");
