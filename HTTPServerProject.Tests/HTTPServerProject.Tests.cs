@@ -6,6 +6,7 @@ using System.IO;
 using HTTPServerProject.ReadStreams;
 using HTTPServerProject.Headers;
 using HTTPServerProject.Request.Body;
+using HTTPServerProject.WriteStreams;
 
 namespace HTTPServerProject.Tests;
 
@@ -72,7 +73,7 @@ public class UnitTestsForConversation
     }
 
     [Fact]
-    public void GetHeadersTest()
+    public void GetRequestHeadersTest()
     {
         var expected = new List<string>() { "Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*" };
         var reader = new TestStreamReader(request);
@@ -86,7 +87,7 @@ public class UnitTestsForConversation
     }
 
     [Fact]
-    public void GetBodyTest()
+    public void GetRequestBodyTest()
     {
         var reader = new TestStreamReader(request);
 
@@ -100,6 +101,18 @@ public class UnitTestsForConversation
         Assert.Equal("quit", expected);
     }
 
+    [Fact]
+   public void GiveResponseHeaderTest()
+   {
+        var eStream = new List<string>();
+        var expected = new List<string>() {"HTTP/1.1 200 OK", ""};
+        var writer = new TestStreamWriter(eStream);
+
+        ResponseHeader resHeader = new ResponseHeader(writer);
+        resHeader.GiveResponseHeader();
+
+        Assert.Equal(eStream, expected); 
+   }
 
 }
 
