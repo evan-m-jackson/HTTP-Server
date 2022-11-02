@@ -5,8 +5,9 @@ name: Build and deploy dotnet core project to Azure Function App - httpserver3
 
 on:
   push:
-    branches:
-      - add-writer-class
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 env:
@@ -29,8 +30,9 @@ jobs:
         shell: bash
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          dotnet build --configuration Release --output ./output
+          dotnet build --configuration Release --output ./output 
           popd
+        working-directory: HTTPServerProject
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
