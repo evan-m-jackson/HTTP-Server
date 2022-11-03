@@ -4,8 +4,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using HTTPServerProject.ReadStream;
-using HTTPServerProject.Request.Headers;
-using HTTPServerProject.Request.Body;
+using HTTPServerProject.RequestHeaders;
+using HTTPServerProject.RequestBody;
 using HTTPServerProject.Responses;
 using HTTPServerProject.WriteStream;
 
