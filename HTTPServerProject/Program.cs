@@ -51,7 +51,7 @@ namespace HTTPServerProject
 
         public static void Main(string[] args)
         {
-            int port = 5000;
+            int port = 3000;
             TcpListener listener = new TcpListener(IPAddress.Any, port);
 
             try
