@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Collections.Generic;
 
-namespace HTTPServerProject.WriteStreams
+namespace HTTPServerProject.WriteStream
 {
     public interface IWriteStreams
     {
@@ -13,12 +13,12 @@ namespace HTTPServerProject.WriteStreams
         void Close();
     }
 
-    public class MyStreamWriter : IWriteStreams
+    public class WriteStreams : IWriteStreams
     {
         Stream rStream = new MemoryStream();
-        StreamWriter writer = default!;
+        StreamWriter writer;
 
-        public MyStreamWriter(Stream stream)
+        public WriteStreams(Stream stream)
         {
             rStream = stream;
             writer = new StreamWriter(stream);
@@ -48,11 +48,11 @@ namespace HTTPServerProject.WriteStreams
 
     }
 
-    public class TestStreamWriter : IWriteStreams
+    public class TestWriteStreams : IWriteStreams
     {
-        List<string> sArr = default!;
+        List<string> sArr = new List<string>();
 
-        public TestStreamWriter(List<string> arr)
+        public TestWriteStreams(List<string> arr)
         {
             sArr = arr;
         }

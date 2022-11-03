@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Collections.Generic;
 
-namespace HTTPServerProject.ReadStreams
+namespace HTTPServerProject.ReadStream
 {
     public interface IReadStreams
     {
@@ -14,12 +14,12 @@ namespace HTTPServerProject.ReadStreams
         void Close();
     }
 
-    public class MyStreamReader : IReadStreams
+    public class ReadStreams : IReadStreams
     {
-        Stream rStream = new MemoryStream();
-        StreamReader reader = default!;
+        Stream rStream;
+        StreamReader reader;
 
-        public MyStreamReader(Stream stream)
+        public ReadStreams(Stream stream)
         {
             rStream = stream;
             reader = new StreamReader(stream);
@@ -27,7 +27,7 @@ namespace HTTPServerProject.ReadStreams
 
         public string ReadLine()
         {
-            string input = reader.ReadLine()!;
+            var input = reader.ReadLine()!;
             return input;
         }
 
@@ -49,18 +49,18 @@ namespace HTTPServerProject.ReadStreams
         }
     }
 
-    public class TestStreamReader : IReadStreams
+    public class TestReadStreams : IReadStreams
     {
-        List<string> sArr = default!;
+        List<string> sArr = new List<string>();
 
-        public TestStreamReader(List<string> arr)
+        public TestReadStreams(List<string> arr)
         {
             sArr = arr;
         }
 
         public string ReadLine()
         {
-            string input = sArr[0];
+            var input = sArr[0];
             sArr.RemoveAt(0);
             return input;
         }

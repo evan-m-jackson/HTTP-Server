@@ -2,14 +2,14 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.ReadStreams;
+using HTTPServerProject.ReadStream;
 
 namespace HTTPServerProject.Request.Headers
 {
 
     public class Header
     {
-        IReadStreams reader = default!;
+        IReadStreams reader;
         List<string> headers = new List<string>();
 
         public Header(IReadStreams r)

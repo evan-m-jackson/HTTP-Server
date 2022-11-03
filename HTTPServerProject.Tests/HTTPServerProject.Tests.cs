@@ -3,10 +3,10 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.ReadStreams;
+using HTTPServerProject.ReadStream;
 using HTTPServerProject.Request.Headers;
 using HTTPServerProject.Request.Body;
-using HTTPServerProject.WriteStreams;
+using HTTPServerProject.WriteStream;
 using HTTPServerProject.Responses;
 
 namespace HTTPServerProject.Tests;
@@ -18,12 +18,12 @@ public class IntegrationTestForServer
     public void TestStartupConnectAndShutdown()
     {
 
-        Thread serverThread = new Thread(new ThreadStart(RunServer));
+        var serverThread = new Thread(new ThreadStart(RunServer));
 
-        string expected = "What's up?";
-        string result = string.Empty;
+        var expected = "What's up?";
+        var result = string.Empty;
 
-        Thread clientThread = new Thread(() => { result = RunClient(expected); });
+        var clientThread = new Thread(() => { result = RunClient(expected); });
 
         clientThread.Start();
         serverThread.Start();
@@ -42,10 +42,10 @@ public class IntegrationTestForServer
     {
         Console.WriteLine("Starting client...");
 
-        TcpClient client = new TcpClient("127.0.0.1", 5000);
-        NetworkStream stream = client.GetStream();
-        StreamReader reader = new StreamReader(stream);
-        StreamWriter writer = new StreamWriter(stream);
+        var client = new TcpClient("127.0.0.1", 3000);
+        var stream = client.GetStream();
+        var reader = new StreamReader(stream);
+        var writer = new StreamWriter(stream);
 
         writer.WriteLine(input);
         writer.Flush();
@@ -64,9 +64,9 @@ public class UnitTestsForRequests
     public void GetRequestInitialLineTest()
     {
         var expected = "GET / HTTP/1.1";
-        var reader = new TestStreamReader(request);
+        var reader = new TestReadStreams(request);
 
-        Header header = new Header(reader);
+        var header = new Header(reader);
         var initialLine = header.GetLine();
 
         Assert.Equal(initialLine, expected);
@@ -77,9 +77,9 @@ public class UnitTestsForRequests
     public void GetRequestHeadersTest()
     {
         var expected = new List<string>() { "Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*" };
-        var reader = new TestStreamReader(request);
+        var reader = new TestReadStreams(request);
 
-        Header header = new Header(reader);
+        var header = new Header(reader);
         var initialLine = header.GetLine();
         var headers = header.GetHeaders();
 
@@ -90,14 +90,14 @@ public class UnitTestsForRequests
     [Fact]
     public void GetRequestBodyTest()
     {
-        var reader = new TestStreamReader(request);
+        var reader = new TestReadStreams(request);
 
-        Header header = new Header(reader);
+        var header = new Header(reader);
         var initialLine = header.GetLine();
         var headers = header.GetHeaders();
 
-        Body body = new Body(reader);
-        string expected = body.GetBody();
+        var body = new Body(reader);
+        var expected = body.GetBody();
 
         Assert.Equal("quit", expected);
     }
@@ -113,9 +113,9 @@ public class UnitTestsForResponses
    public void GiveResponseHeaderTest()
    {
         var expected = new List<string>() {"HTTP/1.1 200 OK", ""};
-        var writer = new TestStreamWriter(eStream);
+        var writer = new TestWriteStreams(eStream);
 
-        Response response = new Response(writer);
+        var response = new Response(writer);
         response.WriteResponseHeader();
 
         Assert.Equal(eStream, expected); 
@@ -125,10 +125,10 @@ public class UnitTestsForResponses
    public void GiveResponseBodyTest()
    {
         var expected = new List<string>() {"HTTP/1.1 200 OK", "", "Hello World!"};
-        var writer = new TestStreamWriter(eStream);
+        var writer = new TestWriteStreams(eStream);
         var input = "Hello World!";
 
-        Response response = new Response(writer);
+        var response = new Response(writer);
         response.WriteResponse(input);
 
         Assert.Equal(eStream, expected);

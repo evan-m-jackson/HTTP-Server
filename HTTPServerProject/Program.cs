@@ -3,18 +3,18 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.ReadStreams;
+using HTTPServerProject.ReadStream;
 using HTTPServerProject.Request.Headers;
 using HTTPServerProject.Request.Body;
 using HTTPServerProject.Responses;
-using HTTPServerProject.WriteStreams;
+using HTTPServerProject.WriteStream;
 
 namespace HTTPServerProject
 {
     public class Server
     {
 
-        TcpClient client = null!;
+        TcpClient client;
 
         public Server(TcpClient tcpc)
         {
@@ -23,20 +23,20 @@ namespace HTTPServerProject
 
         public void Conversation()
         {
-            NetworkStream stream = client.GetStream();
-            MyStreamWriter writer = new MyStreamWriter(stream);
-            MyStreamReader reader = new MyStreamReader(stream);
+            var stream = client.GetStream();
+            var writer = new WriteStreams(stream);
+            var reader = new ReadStreams(stream);
 
             Console.WriteLine("Connection accepted.");
 
-            Header header = new Header(reader);
+            var header = new Header(reader);
             var initialLine = header.GetLine();
             var rHeader = header.GetHeaders();
 
-            Body body = new Body(reader);
+            var body = new Body(reader);
             var input = body.GetBody();
 
-            Response response = new Response(writer);
+            var response = new Response(writer);
             response.WriteResponse(input);
 
             Console.WriteLine("Message received: " + input);
@@ -51,8 +51,8 @@ namespace HTTPServerProject
 
         public static void Main(string[] args)
         {
-            int port = 3000;
-            TcpListener listener = new TcpListener(IPAddress.Any, port);
+            var port = 3000;
+            var listener = new TcpListener(IPAddress.Any, port);
 
             try
             {
@@ -63,9 +63,9 @@ namespace HTTPServerProject
 
                 while (true)
                 {
-                    Server server = new Server(listener.AcceptTcpClient());
+                    var server = new Server(listener.AcceptTcpClient());
 
-                    Thread serverThread = new Thread(new ThreadStart(server.Conversation));
+                    var serverThread = new Thread(new ThreadStart(server.Conversation));
 
                     serverThread.Start();
                 }

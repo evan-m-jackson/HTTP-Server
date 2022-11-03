@@ -2,13 +2,13 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.WriteStreams;
+using HTTPServerProject.WriteStream;
 
 namespace HTTPServerProject.Responses
 {
     public class Response
     {
-        IWriteStreams writer = default!;
+        IWriteStreams writer;
 
         public Response(IWriteStreams w)
         {
