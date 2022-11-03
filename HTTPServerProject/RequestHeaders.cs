@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.IO;
 using HTTPServerProject.ReadStream;
 
-namespace HTTPServerProject.Request.Headers
+namespace HTTPServerProject.RequestHeaders
 {
 
     public class Header
