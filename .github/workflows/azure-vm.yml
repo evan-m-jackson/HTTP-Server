@@ -23,8 +23,15 @@ jobs:
         run: dotnet publish -c Release -r linux-x64 --self-contained true
         working-directory: HTTPServerProject
 
-      - name: Copy to remote machine with scp
-        run: scp -r HTTPServerProject/bin/Release/net6.0/linux-x64/ ${{ secrets.VM_IP_ADDRESS_FULL }}
+      - name: Copy file via ssh key
+        uses: appleboy/scp-action@main
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}
+          source: "HTTPServerProject/bin/Release/net6.0/linux-64/*"
+          target: "home/${{ secrets.USERNAME }}/"
 
       - name: Open IP Address with ssh
         run: ssh ${{ secrets.VM_IP_ADDRESS }}
