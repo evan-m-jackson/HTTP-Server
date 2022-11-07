@@ -43,8 +43,10 @@ jobs:
           target: "home/${{ secrets.USERNAME }}/"
 
       - name: Open IP Address with ssh
-        run: ssh -i "${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}" ${{ secrets.VM_IP_ADDRESS }}
-        run: dotnet linux-x64/HTTPServer.dll 
+        run: |
+          ssh -i "${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}" ${{ secrets.VM_IP_ADDRESS }} 
+          dotnet linux-x64/HTTPServer.dll
+    
 
         
       
