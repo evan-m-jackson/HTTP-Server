@@ -46,7 +46,4 @@ jobs:
         run: |
           ssh -i "${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}" ${{ secrets.VM_IP_ADDRESS }} 
           dotnet linux-x64/HTTPServer.dll
-    
-
-        
-      
+          
