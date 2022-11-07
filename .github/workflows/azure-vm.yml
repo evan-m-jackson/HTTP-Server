@@ -37,13 +37,16 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          # port: ${{ secrets.PORT }}
           key: ${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}
           source: "deploy.tar"
           target: "home/${{ secrets.USERNAME }}/"
 
       - name: Open IP Address with ssh
-        run: |
-          ssh -i "${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}" ${{ secrets.VM_IP_ADDRESS }} 
-          dotnet linux-x64/HTTPServer.dll
-          
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}
+          port: ${{ secrets.PORT }}
+          script: whoami
+      
