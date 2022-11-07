@@ -24,7 +24,7 @@ jobs:
         working-directory: HTTPServerProject
 
       - name: Copy file via ssh key
-        uses: appleboy/scp-action@main
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
