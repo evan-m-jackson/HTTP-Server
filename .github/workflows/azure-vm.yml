@@ -33,7 +33,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}
-          source: "HTTPServerProject/bin/Release/net6.0/linux-64/"
+          source: "HTTPServerProject/bin/Release/net6.0/linux-64/HTTPServer.dll"
           target: "home/${{ secrets.USERNAME }}/"
 
       - name: Open IP Address with ssh
