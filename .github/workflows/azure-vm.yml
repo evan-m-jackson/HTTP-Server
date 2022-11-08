@@ -47,5 +47,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}
-          # port: ${{ secrets.PORT }}
-          script: dotnet linux-x64/HTTPServer.dll
+          script: whoami
