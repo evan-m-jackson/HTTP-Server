@@ -47,4 +47,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}
-          script: nohup dotnet linux-x64/HTTPServer.dll &
+          script: nohup dotnet linux-x64/HTTPServer.dll > nohup.out 2> nohup.err < /dev/null &
