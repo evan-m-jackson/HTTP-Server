@@ -3,7 +3,7 @@ Description=HTTP Server
 
 [Service]
 Type=notify
-ExecStart=bin/Debug/net6.0/HTTPServer.dll
+ExecStart=/usr/bin/Debug/net6.0/HTTPServer.dll
 
 [Install]
 WantedBy=multi-user.target
