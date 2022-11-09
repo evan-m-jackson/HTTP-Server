@@ -47,5 +47,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}
-          command_timeout: 20s
-          script: nohup dotnet /home/ejackson/linux-x64/HTTPServer.dll > nohup.out 2> nohup.err < /dev/null &
+          script: |
+            cd /home/ejackson
+            tar -xvf deploy.tar
+            nohup dotnet build/HTTPServerProject/bin/Release/net6.0/linux-x64/HTTPServer.dll > nohup.out 2> nohup.err < /dev/null &
