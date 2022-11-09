@@ -48,4 +48,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}
           command_timeout: 20s
-          script: nohup dotnet linux-x64/HTTPServer.dll &
+          script: nohup dotnet /home/ejackson/linux-x64/HTTPServer.dll &
