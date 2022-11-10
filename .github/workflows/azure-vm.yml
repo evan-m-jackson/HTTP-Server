@@ -29,7 +29,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           mkdir ../build
-          cp -TR . ../build
+          cp -R . ../build
           tar -cvf deploy.tar ../build/
 
       - name: Copy file via ssh key
@@ -47,4 +47,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.VIRTUAL_MACHINE_SECURITY_KEY }}
-          script: whoami
+          script: |
+            tar -xvf deploy.tar
+            nohup dotnet home/${{ secrets.USERNAME }}/build/HTTPServerProject/bin/Release/net6.0/linux-x64/publish/HTTPServer.dll > nohup.out 2> nohup.err < /dev/null &
