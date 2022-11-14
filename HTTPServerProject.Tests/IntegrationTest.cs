@@ -31,7 +31,7 @@ public class IntegrationTestForServer
     {
         Console.WriteLine("Starting client...");
 
-        var client = new TcpClient("127.0.0.1", 3000);
+        var client = new TcpClient("127.0.0.1", 5000);
         var stream = client.GetStream();
         var reader = new StreamReader(stream);
         var writer = new StreamWriter(stream);

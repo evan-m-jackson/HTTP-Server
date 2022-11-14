@@ -9,3 +9,5 @@ global using HTTPServerProject.RequestHeaders;
 global using HTTPServerProject.RequestBody;
 global using HTTPServerProject.WriteStream;
 global using HTTPServerProject.Responses;
+global using HTTPServerProject.Responses.Code;
+global using HTTPServerProject.Responses.Write;

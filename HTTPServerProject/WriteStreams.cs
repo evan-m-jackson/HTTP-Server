@@ -8,6 +8,7 @@ namespace HTTPServerProject.WriteStream
 {
     public interface IWriteStreams
     {
+        void Write(string str = default!);
         void WriteLine(string str = default!);
         void Flush();
         void Close();
@@ -24,9 +25,14 @@ namespace HTTPServerProject.WriteStream
             writer = new StreamWriter(stream);
         }
 
+        public void Write(string str = default!)
+        {
+            writer.Write(str);
+        }
+
         public void WriteLine(string str = default!)
         {
-            if(str == default!)
+            if (str == default!)
             {
                 writer.WriteLine();
             }
@@ -57,9 +63,21 @@ namespace HTTPServerProject.WriteStream
             sArr = arr;
         }
 
+        public void Write(string str = default!)
+        {
+            if (str == default!)
+            {
+                sArr.Add("");
+            }
+            else
+            {
+                sArr.Add(str);
+            }
+        }
+
         public void WriteLine(string str = default!)
         {
-            if(str == default!)
+            if (str == default!)
             {
                 sArr.Add("");
             }
