@@ -11,3 +11,4 @@ global using HTTPServerProject.WriteStream;
 global using HTTPServerProject.Responses;
 global using HTTPServerProject.Responses.Code;
 global using HTTPServerProject.Responses.Write;
+global using HTTPServerProject.Path;
