@@ -9,6 +9,7 @@ using HTTPServerProject.RequestBody;
 using HTTPServerProject.Responses;
 using HTTPServerProject.WriteStream;
 using HTTPServerProject.Path;
+using HTTPServerProject.Parameters;
 
 namespace HTTPServerProject
 {
@@ -40,7 +41,10 @@ namespace HTTPServerProject
             var httpType = header.GetRequestType(initialLine);
             var httpPath = header.GetPath(initialLine);
 
-            var execute = new RequestPath(writer);
+            var pathParams = new PathParameters();
+            var pathDict = pathParams.pathDict;
+
+            var execute = new RequestPath(writer, pathDict);
             execute.ExecuteRequest(httpPath, httpType, bodyString);
 
             Console.WriteLine("Message received: " + bodyString);

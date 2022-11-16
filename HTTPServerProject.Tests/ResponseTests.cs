@@ -22,10 +22,11 @@ public class UnitTestsForResponses
     {
         var expected = new List<string>() { "HTTP/1.1 200 OK", "Location: Earth", "", "Hello World!" };
         var writer = new TestWriteStreams(eStream);
+        var headers = new List<string>(){"Location: Earth"};
         var body = "Hello World!";
 
-        var response = new WriteResponse(writer, 200, body);
-        response.AddHeader("Location", "Earth");
+        var response = new WriteResponse(writer, 200, body, headers);
+        // response.AddHeader("Location: Earth");
         response.GetResponse();
         Assert.Equal(eStream, expected);
     }

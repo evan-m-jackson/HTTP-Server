@@ -12,8 +12,10 @@ public class UnitTestsForResponsesByPath
         var path = "redirect";
         var type = "GET";
         var requestBody = "";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
@@ -27,8 +29,10 @@ public class UnitTestsForResponsesByPath
         var path = "method_options";
         var type = "OPTIONS";
         var requestBody = "";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
@@ -42,8 +46,10 @@ public class UnitTestsForResponsesByPath
         var path = "method_options2";
         var type = "OPTIONS";
         var requestBody = "";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
@@ -57,8 +63,10 @@ public class UnitTestsForResponsesByPath
         var path = "head_request";
         var type = "HEAD";
         var requestBody = "";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
@@ -72,8 +80,10 @@ public class UnitTestsForResponsesByPath
         var path = "head_request";
         var type = "GET";
         var requestBody = "";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
@@ -87,8 +97,10 @@ public class UnitTestsForResponsesByPath
         var path = "simple_get";
         var type = "GET";
         var requestBody = "";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
@@ -102,8 +114,10 @@ public class UnitTestsForResponsesByPath
         var path = "simple_get_with_body";
         var type = "GET";
         var requestBody = "";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
@@ -117,8 +131,10 @@ public class UnitTestsForResponsesByPath
         var path = "echo_body";
         var type = "GET";
         var requestBody = "Goodbye";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
@@ -132,8 +148,10 @@ public class UnitTestsForResponsesByPath
         var path = "text_response";
         var type = "GET";
         var requestBody = "";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
@@ -147,8 +165,10 @@ public class UnitTestsForResponsesByPath
         var path = "html_response";
         var type = "GET";
         var requestBody = "";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
@@ -162,8 +182,10 @@ public class UnitTestsForResponsesByPath
         var path = "json_response";
         var type = "GET";
         var requestBody = "";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
@@ -177,11 +199,83 @@ public class UnitTestsForResponsesByPath
         var path = "xml_response";
         var type = "GET";
         var requestBody = "";
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer);
+        var requestPath = new RequestPath(writer, pathDict);
         requestPath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
+
+    [Fact]
+    public void GetKittehResponse()
+    {
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
+        var expected = new List<string>() { "HTTP/1.1 200 OK", "Content-Type: image/jpeg", "", "kitteh.jpg"};
+        var writer = new TestWriteStreams(eStream);
+        var path = "kitteh.jpg";
+        var type = "GET";
+        var requestBody = "";
+
+        var requestPath = new RequestPath(writer, pathDict);
+        requestPath.ExecuteRequest(path, type, requestBody);
+
+        Assert.Equal(eStream, expected);
+    }
+
+    [Fact]
+    public void GetDoggoResponse()
+    {
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
+        var expected = new List<string>() { "HTTP/1.1 200 OK", "Content-Type: image/png", "", "doggo.png"};
+        var writer = new TestWriteStreams(eStream);
+        var path = "doggo.png";
+        var type = "GET";
+        var requestBody = "";
+
+        var requestPath = new RequestPath(writer, pathDict);
+        requestPath.ExecuteRequest(path, type, requestBody);
+
+        Assert.Equal(eStream, expected);
+    }
+
+    [Fact]
+    public void GetKissesResponse()
+    {
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
+        var expected = new List<string>() { "HTTP/1.1 200 OK", "Content-Type: image/gif", "", "kisses.gif"};
+        var writer = new TestWriteStreams(eStream);
+        var path = "kisses.gif";
+        var type = "GET";
+        var requestBody = "";
+
+        var requestPath = new RequestPath(writer, pathDict);
+        requestPath.ExecuteRequest(path, type, requestBody);
+
+        Assert.Equal(eStream, expected);
+    }
+
+    [Fact]
+    public void GetHealthCheckResponse()
+    {
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
+        var expected = new List<string>() { "HTTP/1.1 200 OK", "Content-Type: text/html;charset=utf-8", "", "health-check.html"};
+        var writer = new TestWriteStreams(eStream);
+        var path = "health-check.html";
+        var type = "GET";
+        var requestBody = "";
+
+        var requestPath = new RequestPath(writer, pathDict);
+        requestPath.ExecuteRequest(path, type, requestBody);
+
+        Assert.Equal(eStream, expected);
+    }
+
+    
 
 }

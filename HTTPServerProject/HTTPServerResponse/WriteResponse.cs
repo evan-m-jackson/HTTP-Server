@@ -6,16 +6,17 @@ namespace HTTPServerProject.Responses.Write
     public class WriteResponse
     {
         IWriteStreams streamWriter;
-        public Dictionary<string, string> headers = new Dictionary<string, string>();
+        public List<string> resHeaders = new List<string>();
         int statusCode;
 
         string resBody;
 
-        public WriteResponse(IWriteStreams writer, int code, string body = "")
+        public WriteResponse(IWriteStreams writer, int code, string body = "", List<string> headers = default!)
         {
             streamWriter = writer;
             statusCode = code;
             resBody = body;
+            resHeaders = headers;
         }
         public void GetResponse()
         {
@@ -27,15 +28,18 @@ namespace HTTPServerProject.Responses.Write
 
         public void WriteResponseHeaders()
         {
-            foreach (var (name, description) in headers)
+            if (resHeaders != default)
             {
-                streamWriter.WriteLine($"{name}: {description}");
+            foreach (var name in resHeaders)
+            {
+                streamWriter.WriteLine($"{name}");
+            }
             }
         }
 
-        public void AddHeader(string name, string description)
+        public void AddHeader(string name, string description = default!)
         {
-            headers.Add(name, description);
+            resHeaders.Add(name);
         }
 
         public void WriteResponseBody()
