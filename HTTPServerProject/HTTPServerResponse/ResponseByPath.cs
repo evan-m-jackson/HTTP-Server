@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.Text.Json;
 using HTTPServerProject.Responses;
 using HTTPServerProject.Responses.Write;
 using HTTPServerProject.WriteStream;
@@ -23,6 +24,8 @@ namespace HTTPServerProject.Path
         {
             if (pathDict.ContainsKey(path))
             {
+                if (pathDict[path].ContainsKey(type))
+                {
                 Dictionary<string, object> paramDict = pathDict[path][type];
                 int code = (int)paramDict["Status Code"];
                 List<string> headers = (List<string>)paramDict["Headers"];
@@ -30,12 +33,46 @@ namespace HTTPServerProject.Path
 
                 var response = new WriteResponse(writer, code, body, headers);
                 response.GetResponse();
+                }
+                else
+                {
+                    var response = new WriteResponse(writer, 405, "");
+                    response.GetResponse();
+                }
             }
 
             else if (path == "echo_body")
             {
                 var response = new WriteResponse(writer, 200, requestBody);
                 response.GetResponse();
+            }
+
+            else if (path == "todo")
+            {
+                if (type == "POST")
+                {
+                    if(requestBody.StartsWith('{') && requestBody.EndsWith('}'))
+                    {
+                    List<string> headers = new List<string>(){"Content-Type: application/json;charset=utf-8"};
+                    var response = new WriteResponse(writer, 201, requestBody, headers);
+                    response.GetResponse();
+                    }
+                    else if (requestBody.StartsWith('<'))
+                    {
+                        var response = new WriteResponse(writer, 415, "");
+                        response.GetResponse();
+                    }
+                    else
+                    {
+                        var response = new WriteResponse(writer, 400, "");
+                        response.GetResponse();
+                    }
+                }
+                else
+                {
+                    var response = new WriteResponse(writer, 405, "");
+                    response.GetResponse();
+                }
             }
 
             else if (path == "")

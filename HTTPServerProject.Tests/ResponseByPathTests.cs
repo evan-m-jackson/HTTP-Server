@@ -276,6 +276,71 @@ public class UnitTestsForResponsesByPath
         Assert.Equal(eStream, expected);
     }
 
-    
+    [Fact]
+    public void GetToDoTaskResponse()
+    {
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
+        var expected = new List<string>() { "HTTP/1.1 201 Created", "Content-Type: application/json;charset=utf-8", "", "{\"key1\":\"value1\",\"key2\":\"value2\"}"};
+        var writer = new TestWriteStreams(eStream);
+        var path = "todo";
+        var type = "POST";
+        var requestBody = "{\"key1\":\"value1\",\"key2\":\"value2\"}";
 
+        var requestPath = new RequestPath(writer, pathDict);
+        requestPath.ExecuteRequest(path, type, requestBody);
+
+        Assert.Equal(eStream, expected);
+    }
+
+    [Fact]
+    public void GetMethodNotAllowedTest()
+    {
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
+        var expected = new List<string>() { "HTTP/1.1 405 Method Not Allowed",  ""};
+        var writer = new TestWriteStreams(eStream);
+        var path = "todo";
+        var type = "GET";
+        var requestBody = "";
+
+        var requestPath = new RequestPath(writer, pathDict);
+        requestPath.ExecuteRequest(path, type, requestBody);
+
+        Assert.Equal(eStream, expected);
+    }
+
+    [Fact]
+    public void ToDoTaskUnsupportedTypeTest()
+    {
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
+        var expected = new List<string>() { "HTTP/1.1 415 Unsupported Media Type",  ""};
+        var writer = new TestWriteStreams(eStream);
+        var path = "todo";
+        var type = "POST";
+        var requestBody = "<task>a new task</task>";
+
+        var requestPath = new RequestPath(writer, pathDict);
+        requestPath.ExecuteRequest(path, type, requestBody);
+
+        Assert.Equal(eStream, expected);
+    }
+
+    [Fact]
+    public void ToDoTaskInvalidTest()
+    {
+        var pathParams = new TestPathParameters();
+        var pathDict = pathParams.pathDict;
+        var expected = new List<string>() { "HTTP/1.1 400 Bad Request",  ""};
+        var writer = new TestWriteStreams(eStream);
+        var path = "todo";
+        var type = "POST";
+        var requestBody = "task: new task";
+
+        var requestPath = new RequestPath(writer, pathDict);
+        requestPath.ExecuteRequest(path, type, requestBody);
+
+        Assert.Equal(eStream, expected);
+    }
 }

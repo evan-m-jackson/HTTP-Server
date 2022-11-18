@@ -9,9 +9,12 @@ public class ResponseCode
     {
         codeString = c.ToString();
         statusMessages.Add("200", "OK");
+        statusMessages.Add("201", "Created");
         statusMessages.Add("301", "Moved Permanently");
+        statusMessages.Add("400", "Bad Request");
         statusMessages.Add("404", "Not Found");
         statusMessages.Add("405", "Method Not Allowed");
+        statusMessages.Add("415", "Unsupported Media Type");
     }
 
     public string GetStatus()

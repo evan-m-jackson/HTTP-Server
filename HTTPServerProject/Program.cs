@@ -48,7 +48,7 @@ namespace HTTPServerProject
             execute.ExecuteRequest(httpPath, httpType, bodyString);
 
             Console.WriteLine("Message received: " + bodyString);
-            Console.WriteLine("Message sent back: " + bodyString);
+            Console.WriteLine("Message sent back: " + bodyString.GetType());
 
             Console.WriteLine("Closing the connection.");
 

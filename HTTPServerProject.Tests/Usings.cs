@@ -13,3 +13,5 @@ global using HTTPServerProject.Responses.Code;
 global using HTTPServerProject.Responses.Write;
 global using HTTPServerProject.Path;
 global using HTTPServerProject.Parameters;
+global using HTTPServerProject.Proxy.Server;
+global using HTTPServerProject.Proxy.Client;
