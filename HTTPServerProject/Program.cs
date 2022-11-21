@@ -3,16 +3,20 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.ReadStreams;
-using HTTPServerProject.Headers;
-using HTTPServerProject.Request.Body;
+using HTTPServerProject.ReadStream;
+using HTTPServerProject.RequestHeaders;
+using HTTPServerProject.RequestBody;
+using HTTPServerProject.Responses;
+using HTTPServerProject.WriteStream;
+using HTTPServerProject.Path;
+using HTTPServerProject.Parameters;
 
 namespace HTTPServerProject
 {
     public class Server
     {
 
-        TcpClient client = null!;
+        TcpClient client;
 
         public Server(TcpClient tcpc)
         {
@@ -21,23 +25,30 @@ namespace HTTPServerProject
 
         public void Conversation()
         {
-            NetworkStream stream = client.GetStream();
-            StreamWriter writer = new StreamWriter(stream);
-            MyStreamReader reader = new MyStreamReader(stream);
+            var stream = client.GetStream();
+            var writer = new WriteStreams(stream);
+            var reader = new ReadStreams(stream);
 
             Console.WriteLine("Connection accepted.");
 
-            Header header = new Header(reader);
+            var header = new Header(reader);
             var initialLine = header.GetLine();
             var rHeader = header.GetHeaders();
 
-            Body body = new Body(reader);
-            var input = body.GetBody();
+            var requestBody = new Body(reader);
+            var bodyString = requestBody.GetBody();
 
-            Console.WriteLine("Message received: " + input);
-            writer.WriteLine(input);
-            writer.Flush();
-            Console.WriteLine("Message sent back: " + input);
+            var httpType = header.GetRequestType(initialLine);
+            var httpPath = header.GetPath(initialLine);
+
+            var pathParams = new PathParameters();
+            var pathDict = pathParams.pathDict;
+
+            var execute = new RequestPath(writer, pathDict);
+            execute.ExecuteRequest(httpPath, httpType, bodyString);
+
+            Console.WriteLine("Message received: " + bodyString);
+            Console.WriteLine("Message sent back: " + bodyString.GetType());
 
             Console.WriteLine("Closing the connection.");
 
@@ -48,21 +59,21 @@ namespace HTTPServerProject
 
         public static void Main(string[] args)
         {
-            int port = 8080;
-            TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
+            var port = 5000;
+            var listener = new TcpListener(IPAddress.Any, port);
 
             try
             {
-                
+
                 listener.Start();
 
                 Console.WriteLine("Server running on port {0}", port);
 
                 while (true)
                 {
-                    Server server = new Server(listener.AcceptTcpClient());
+                    var server = new Server(listener.AcceptTcpClient());
 
-                    Thread serverThread = new Thread(new ThreadStart(server.Conversation));
+                    var serverThread = new Thread(new ThreadStart(server.Conversation));
 
                     serverThread.Start();
                 }

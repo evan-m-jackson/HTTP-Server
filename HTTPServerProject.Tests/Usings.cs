@@ -1,1 +1,17 @@
 global using Xunit;
+global using System.Threading;
+global using System;
+global using System.Net;
+global using System.Net.Sockets;
+global using System.IO;
+global using HTTPServerProject.ReadStream;
+global using HTTPServerProject.RequestHeaders;
+global using HTTPServerProject.RequestBody;
+global using HTTPServerProject.WriteStream;
+global using HTTPServerProject.Responses;
+global using HTTPServerProject.Responses.Code;
+global using HTTPServerProject.Responses.Write;
+global using HTTPServerProject.Path;
+global using HTTPServerProject.Parameters;
+global using HTTPServerProject.Proxy.Server;
+global using HTTPServerProject.Proxy.Client;
