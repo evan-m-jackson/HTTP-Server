@@ -8,6 +8,8 @@ using HTTPServerProject.RequestHeaders;
 using HTTPServerProject.RequestBody;
 using HTTPServerProject.Responses;
 using HTTPServerProject.WriteStream;
+using HTTPServerProject.Path;
+using HTTPServerProject.Parameters;
 
 namespace HTTPServerProject
 {
@@ -33,14 +35,20 @@ namespace HTTPServerProject
             var initialLine = header.GetLine();
             var rHeader = header.GetHeaders();
 
-            var body = new Body(reader);
-            var input = body.GetBody();
+            var requestBody = new Body(reader);
+            var bodyString = requestBody.GetBody();
 
-            var response = new Response(writer);
-            response.WriteResponse(input);
+            var httpType = header.GetRequestType(initialLine);
+            var httpPath = header.GetPath(initialLine);
 
-            Console.WriteLine("Message received: " + input);
-            Console.WriteLine("Message sent back: " + input);
+            var pathParams = new PathParameters();
+            var pathDict = pathParams.pathDict;
+
+            var execute = new RequestPath(writer, pathDict);
+            execute.ExecuteRequest(httpPath, httpType, bodyString);
+
+            Console.WriteLine("Message received: " + bodyString);
+            Console.WriteLine("Message sent back: " + bodyString.GetType());
 
             Console.WriteLine("Closing the connection.");
 
@@ -51,12 +59,12 @@ namespace HTTPServerProject
 
         public static void Main(string[] args)
         {
-            var port = 3000;
+            var port = 5000;
             var listener = new TcpListener(IPAddress.Any, port);
 
             try
             {
-                
+
                 listener.Start();
 
                 Console.WriteLine("Server running on port {0}", port);

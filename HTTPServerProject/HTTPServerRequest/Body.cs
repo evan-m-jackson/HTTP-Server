@@ -19,14 +19,13 @@ namespace HTTPServerProject.RequestBody
         {
             var input = reader.Peek();
             var result = "";
-            do
+            while ((input != -1))
             {
                 var r = reader.Read();
                 var c = (char)r;
                 result += c;
                 input = reader.Peek();
-            } while ((input != -1));
-
+            }
             return result;
         }
     }
