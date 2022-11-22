@@ -1,8 +1,8 @@
 using HTTPServerProject.WriteStream;
 using HTTPServerProject.Responses.Code;
 
-namespace HTTPServerProject.Responses.Write
-{
+namespace HTTPServerProject.Responses.Write;
+
     public class WriteResponse
     {
         IWriteStreams streamWriter;
@@ -64,4 +64,3 @@ namespace HTTPServerProject.Responses.Write
         }
 
     }
-}

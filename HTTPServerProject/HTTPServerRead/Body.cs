@@ -4,8 +4,8 @@ using System.Net.Sockets;
 using System.IO;
 using HTTPServerProject.ReadStream;
 
-namespace HTTPServerProject.RequestBody
-{
+namespace HTTPServerProject.ReadBody;
+
     public class Body
     {
         IReadStreams reader;
@@ -29,4 +29,3 @@ namespace HTTPServerProject.RequestBody
             return result;
         }
     }
-}

@@ -1,3 +1,10 @@
+using HTTPServerProject.ReadHeaders;
+using HTTPServerProject.ReadBody;
+using HTTPServerProject.Tests.ReadStream;
+using HTTPServerProject.Tests.WriteStream;
+using HTTPServerProject.Proxy.Server;
+using HTTPServerProject.Tests.Proxy.Client;
+
 namespace HTTPServerProject.ProxyServerTests;
 
 public class UnitTestsForProxyServer

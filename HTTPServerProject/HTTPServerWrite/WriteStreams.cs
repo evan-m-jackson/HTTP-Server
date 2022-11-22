@@ -4,8 +4,8 @@ using System.Net.Sockets;
 using System.IO;
 using System.Collections.Generic;
 
-namespace HTTPServerProject.WriteStream
-{
+namespace HTTPServerProject.WriteStream;
+
     public interface IWriteStreams
     {
         void Write(string str = default!);
@@ -51,48 +51,4 @@ namespace HTTPServerProject.WriteStream
         {
             writer.Close();
         }
-
     }
-
-    public class TestWriteStreams : IWriteStreams
-    {
-        List<string> sArr = new List<string>();
-
-        public TestWriteStreams(List<string> arr)
-        {
-            sArr = arr;
-        }
-
-        public void Write(string str = default!)
-        {
-            if (str == default!)
-            {
-                sArr.Add("");
-            }
-            else
-            {
-                sArr.Add(str);
-            }
-        }
-
-        public void WriteLine(string str = default!)
-        {
-            if (str == default!)
-            {
-                sArr.Add("");
-            }
-            else
-            {
-                sArr.Add(str);
-            }
-        }
-
-        public void Flush()
-        {
-        }
-
-        public void Close()
-        {
-        }
-    }
-}

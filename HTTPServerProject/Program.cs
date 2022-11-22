@@ -4,15 +4,15 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using HTTPServerProject.ReadStream;
-using HTTPServerProject.RequestHeaders;
-using HTTPServerProject.RequestBody;
+using HTTPServerProject.ReadHeaders;
+using HTTPServerProject.ReadBody;
 using HTTPServerProject.Responses;
 using HTTPServerProject.WriteStream;
 using HTTPServerProject.Path;
 using HTTPServerProject.Parameters;
 
-namespace HTTPServerProject
-{
+namespace HTTPServerProject;
+
     public class Server
     {
 
@@ -90,4 +90,3 @@ namespace HTTPServerProject
 
         }
     }
-}

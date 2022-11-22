@@ -9,7 +9,6 @@ public class ProxyServer
     List<string> reqHeaders;
     string reqBody;
     
-
     public ProxyServer(IWriteStreams writer, string iL, List<string> rH, string rB)
     {
         streamWriter = writer;

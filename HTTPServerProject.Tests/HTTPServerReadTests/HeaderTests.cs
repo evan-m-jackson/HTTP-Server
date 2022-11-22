@@ -1,6 +1,9 @@
-namespace HTTPServerProject.RequestTests;
+using HTTPServerProject.Tests.ReadStream;
+using HTTPServerProject.ReadHeaders;
 
-public class UnitTestsForRequests
+namespace HTTPServerProject.Tests.ReadHeaders;
+
+public class UnitTestsForReadingHeaders
 {
     public List<string> request = new List<string>() { "GET / HTTP/1.1", "Host: localhost:5000", "User-Agent: curl/7.79.1", "Accept: */*", "", "quit" };
 
@@ -14,7 +17,6 @@ public class UnitTestsForRequests
         var initialLine = header.GetLine();
 
         Assert.Equal(initialLine, expected);
-
     }
 
     [Fact]
@@ -55,23 +57,5 @@ public class UnitTestsForRequests
         var headers = header.GetHeaders();
 
         Assert.Equal(headers, expected);
-
     }
-
-    [Fact]
-    public void GetRequestBodyTest()
-    {
-        var reader = new TestReadStreams(request);
-
-        var header = new Header(reader);
-        var initialLine = header.GetLine();
-        var headers = header.GetHeaders();
-
-        var body = new Body(reader);
-        var expected = body.GetBody();
-
-        Assert.Equal("quit", expected);
-    }
-
-
 }

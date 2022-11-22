@@ -7,8 +7,8 @@ using HTTPServerProject.Responses;
 using HTTPServerProject.Responses.Write;
 using HTTPServerProject.WriteStream;
 
-namespace HTTPServerProject.Path
-{
+namespace HTTPServerProject.Path;
+
     public class RequestPath
     {
         IWriteStreams writer;
@@ -88,4 +88,3 @@ namespace HTTPServerProject.Path
         }
 
     }
-}
