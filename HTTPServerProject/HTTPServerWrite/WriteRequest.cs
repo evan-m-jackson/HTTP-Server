@@ -1,15 +1,15 @@
 using HTTPServerProject.WriteStream;
 
-namespace HTTPServerProject.Proxy.Server;
+namespace HTTPServerProject.Requests.Write;
 
-public class ProxyServer
+public class WriteRequest
 {
     IWriteStreams streamWriter;
     string initialLine;
     List<string> reqHeaders;
     string reqBody;
     
-    public ProxyServer(IWriteStreams writer, string iL, List<string> rH, string rB)
+    public WriteRequest(IWriteStreams writer, string iL, List<string> rH, string rB)
     {
         streamWriter = writer;
         initialLine = iL;
@@ -17,7 +17,7 @@ public class ProxyServer
         reqBody = rB;
     }
 
-    public void WriteRequest()
+    public void GetRequest()
     {
         streamWriter.WriteLine(initialLine);
         WriteRequestHeaders();

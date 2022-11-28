@@ -74,5 +74,10 @@ namespace HTTPServerProject.ReadHeaders;
             }
             return result;
         }
-
+        
+        public int GetCode(string statusLine)
+        {
+            var codeString = statusLine.Substring(9,3);
+            return Int32.Parse(codeString);
+        }
     }
