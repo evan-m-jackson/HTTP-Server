@@ -13,9 +13,14 @@ public class TestReadStreams : IReadStreams
 
     public string ReadLine()
     {
+        if (sArr.Count > 0)
+        {
         var input = sArr[0];
         sArr.RemoveAt(0);
         return input;
+        }
+
+        return "";
     }
 
     public int Read()
@@ -45,6 +50,10 @@ public class TestReadStreams : IReadStreams
 
     public int Peek()
     {
+        if (sArr.Count == 0)
+        {
+            return -1;
+        }
         var input = sArr[0];
         if (input == "")
         {

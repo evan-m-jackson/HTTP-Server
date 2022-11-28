@@ -6,10 +6,13 @@ using System.IO;
 using HTTPServerProject.ReadStream;
 using HTTPServerProject.ReadHeaders;
 using HTTPServerProject.ReadBody;
-using HTTPServerProject.Responses;
+using HTTPServerProject.Responses.Write;
 using HTTPServerProject.WriteStream;
 using HTTPServerProject.Path;
 using HTTPServerProject.Parameters;
+using HTTPServerProject.Requests.Write;
+using HTTPServerProject.Proxy.Client;
+using HTTPServerProject.Proxy.Response;
 
 namespace HTTPServerProject;
 
@@ -40,13 +43,30 @@ namespace HTTPServerProject;
 
             var httpType = header.GetRequestType(initialLine);
             var httpPath = header.GetPath(initialLine);
+            
+            if (httpPath == "todo")
+            {
+                var proxyClient = new ProxyClient();
+                var proxyStream = proxyClient.GetStream();
+                var proxyWriter = new WriteStreams(proxyStream);
+                var proxyReader = new ReadStreams(proxyStream);
+                
+                var proxyRequest = new WriteRequest(proxyWriter, initialLine, rHeader, bodyString);
+                proxyRequest.GetRequest();
 
-            var pathParams = new PathParameters();
-            var pathDict = pathParams.pathDict;
+                var proxyResponse = new ProxyResponse(proxyReader, writer, httpPath, httpType);
+                proxyResponse.GetResponse();
+            }
 
-            var execute = new RequestPath(writer, pathDict);
-            execute.ExecuteRequest(httpPath, httpType, bodyString);
+            else
+            {
+                var pathParams = new PathParameters();
+                var pathDict = pathParams.pathDict;
 
+                var execute = new RequestPath(writer, pathDict);
+                execute.ExecuteRequest(httpPath, httpType, bodyString);    
+            }
+            
             Console.WriteLine("Message received: " + bodyString);
             Console.WriteLine("Message sent back: " + bodyString.GetType());
 

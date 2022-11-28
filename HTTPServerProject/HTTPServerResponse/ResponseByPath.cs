@@ -47,34 +47,6 @@ namespace HTTPServerProject.Path;
                 response.GetResponse();
             }
 
-            else if (path == "todo")
-            {
-                if (type == "POST")
-                {
-                    if(requestBody.StartsWith('{') && requestBody.EndsWith('}'))
-                    {
-                    List<string> headers = new List<string>(){"Content-Type: application/json;charset=utf-8"};
-                    var response = new WriteResponse(writer, 201, requestBody, headers);
-                    response.GetResponse();
-                    }
-                    else if (requestBody.StartsWith('<'))
-                    {
-                        var response = new WriteResponse(writer, 415, "");
-                        response.GetResponse();
-                    }
-                    else
-                    {
-                        var response = new WriteResponse(writer, 400, "");
-                        response.GetResponse();
-                    }
-                }
-                else
-                {
-                    var response = new WriteResponse(writer, 405, "");
-                    response.GetResponse();
-                }
-            }
-
             else if (path == "")
             {
                 var response = new WriteResponse(writer, 200);
