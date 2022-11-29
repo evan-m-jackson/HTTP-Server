@@ -44,13 +44,18 @@ namespace HTTPServerProject;
             var httpType = header.GetRequestType(initialLine);
             var httpPath = header.GetPath(initialLine);
             
-            if (httpPath == "todo")
+            if (httpPath.Substring(0, 4) == "todo")
             {
                 var proxyClient = new ProxyClient();
                 var proxyStream = proxyClient.GetStream();
                 var proxyWriter = new WriteStreams(proxyStream);
                 var proxyReader = new ReadStreams(proxyStream);
-                
+
+                if (httpType == "DELETE")
+                {
+                    initialLine = initialLine.Replace("todo", "todo-delete");
+                }
+
                 var proxyRequest = new WriteRequest(proxyWriter, initialLine, rHeader, bodyString);
                 proxyRequest.GetRequest();
 
