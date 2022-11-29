@@ -31,7 +31,7 @@ public class ProxyResponse
         var headers = GetHeaders();
         var body = GetBody();
         
-        if (_path == "todo" && _type == "POST")
+        if (_type == "POST")
         {
             if (code == 200)
             {
@@ -53,6 +53,36 @@ public class ProxyResponse
                 var response = new WriteResponse(_writer, code);
                 response.GetResponse();
             }
+        }
+        
+        else if (_type == "PUT")
+        {
+            if (code == 200)
+            {
+                GetFullJSONContentType(headers);
+                Console.WriteLine(body);
+                if (body.StartsWith('{') && body.EndsWith('}') && body.Length > 2)
+                {
+                    var response = new WriteResponse(_writer, 200, body, headers);
+                    response.GetResponse();
+                }
+                else
+                {
+                    var response = new WriteResponse(_writer, 400);
+                    response.GetResponse();
+                }    
+            }
+            else
+            {
+                var response = new WriteResponse(_writer, code);
+                response.GetResponse();
+            }
+        }
+        
+        else if (_type == "DELETE")
+        {
+            var response = new WriteResponse(_writer, 204);
+            response.GetResponse();
         }
     }
     
@@ -78,7 +108,7 @@ public class ProxyResponse
         {
             var r = _reader.Read();
             var c = (char)r;
-
+        
             if (c == ',')
             {
                 addToResult = true;
