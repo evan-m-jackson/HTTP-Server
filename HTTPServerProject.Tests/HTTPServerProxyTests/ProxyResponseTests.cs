@@ -10,7 +10,7 @@ public class UnitTestsForProxyResponse
     public void GetTodoPOSTValidResponseTest()
     {
         var expected = new List<string>() { "HTTP/1.1 201 Created", "Content-Type: application/json;charset=utf-8", "", "{ 'task': 'First Item' }" };
-        var proxyStream = new List<string>() { "HTTP/1.1 200 OK", "Content-Type: application/json", "", "{ 'id': 1, 'task': 'First Item' }" };
+        var proxyStream = new List<string>() { "HTTP/1.1 200 OK", "Content-Type: application/json", "", "{ 'task': 'First Item' }" };
         var stream = new List<string>();
         var reader = new TestReadStreams(proxyStream);
         var httpType = "POST";
@@ -61,7 +61,7 @@ public class UnitTestsForProxyResponse
     public void GetTodoPUTValidResponseTest()
     {
         var expected = new List<string>() { "HTTP/1.1 200 OK", "Content-Type: application/json;charset=utf-8", "", "{ 'task': 'First Item' }" };
-        var proxyStream = new List<string>() { "HTTP/1.1 200 OK", "Content-Type: application/json", "", "{ 'id': 1, 'task': 'First Item' }" };
+        var proxyStream = new List<string>() { "HTTP/1.1 200 OK", "Content-Type: application/json", "", "{ 'task': 'First Item' }" };
         var stream = new List<string>();
         var reader = new TestReadStreams(proxyStream);
         var httpType = "PUT";
@@ -130,23 +130,6 @@ public class UnitTestsForProxyResponse
     {
         var expected = new List<string>() { "HTTP/1.1 204 No Content", ""};
         var proxyStream = new List<string>() { "HTTP/1.1 500 Internal Server Error", "" };
-        var stream = new List<string>();
-        var reader = new TestReadStreams(proxyStream);
-        var httpType = "DELETE";
-        var httpPath = "todo/1000";
-        var writer = new TestWriteStreams(stream);
-
-        var proxyResponse = new ProxyResponse(reader, writer, httpPath, httpType);
-        proxyResponse.GetResponse();
-
-        Assert.Equal(expected, stream);
-    }
-
-    [Fact]
-    public void GetToDoDELETE404Test()
-    {
-        var expected = new List<string>() { "HTTP/1.1 404 Not Found", ""};
-        var proxyStream = new List<string>() { "HTTP/1.1 404 Not Found", "" };
         var stream = new List<string>();
         var reader = new TestReadStreams(proxyStream);
         var httpType = "DELETE";
