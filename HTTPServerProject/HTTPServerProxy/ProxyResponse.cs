@@ -101,24 +101,7 @@ public class ProxyResponse
 
     private string GetBody()
     {
-        var input = _reader.Peek();
-        var result = "";
-        var addToResult = false;
-        while ((input != -1))
-        {
-            var r = _reader.Read();
-            var c = (char)r;
-        
-            if (c == ',')
-            {
-                addToResult = true;
-            }
-            else if (addToResult || c == '{') 
-            {
-                result += c;    
-            }
-            input = _reader.Peek();
-        }
+        var result = _body.GetBody();
         return result;
     }
 
