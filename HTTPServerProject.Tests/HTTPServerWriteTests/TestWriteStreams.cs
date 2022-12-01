@@ -1,6 +1,6 @@
-using HTTPServerProject.WriteStream;
+using HTTPServerWrite.Streams;
 
-namespace HTTPServerProject.Tests.WriteStream
+namespace HTTPServerWriteTests.Streams
 {
     public class TestWriteStreams : IWriteStreams
     {

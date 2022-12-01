@@ -3,16 +3,16 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.ReadStream;
-using HTTPServerProject.ReadHeaders;
-using HTTPServerProject.ReadBody;
-using HTTPServerProject.Responses.Write;
-using HTTPServerProject.WriteStream;
-using HTTPServerProject.Path;
-using HTTPServerProject.Parameters;
-using HTTPServerProject.Requests.Write;
-using HTTPServerProject.Proxy.Client;
-using HTTPServerProject.Proxy.Response;
+using HTTPServerRead.Streams;
+using HTTPServerRead.Header;
+using HTTPServerRead.Body;
+using HTTPServerWrite.Response;
+using HTTPServerWrite.Streams;
+using HTTPServerResponse.Path;
+using HTTPServerResponse.Parameters;
+using HTTPServerWrite.Request;
+using HTTPServerProxy.Client;
+using HTTPServerProxy.Response;
 
 namespace HTTPServerProject;
 
@@ -68,7 +68,7 @@ namespace HTTPServerProject;
                 var pathParams = new PathParameters();
                 var pathDict = pathParams.pathDict;
 
-                var execute = new RequestPath(writer, pathDict);
+                var execute = new ResponsePath(writer, pathDict);
                 execute.ExecuteRequest(httpPath, httpType, bodyString);    
             }
             

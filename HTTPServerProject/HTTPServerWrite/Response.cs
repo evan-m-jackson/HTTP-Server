@@ -1,7 +1,7 @@
-using HTTPServerProject.WriteStream;
-using HTTPServerProject.Responses.Code;
+using HTTPServerWrite.Streams;
+using HTTPServerResponse.StatusCode;
 
-namespace HTTPServerProject.Responses.Write;
+namespace HTTPServerWrite.Response;
 
     public class WriteResponse
     {

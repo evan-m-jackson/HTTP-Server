@@ -1,6 +1,6 @@
-using HTTPServerProject.Parameters;
+using HTTPServerResponse.Parameters;
 
-namespace HTTPServerProject.Tests.Parameters;
+namespace HTTPServerResponseTests.Parameters;
 
 public class TestPathParameters : IPathParameters
 {

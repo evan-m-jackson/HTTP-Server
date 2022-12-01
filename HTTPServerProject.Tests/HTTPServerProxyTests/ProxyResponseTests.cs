@@ -1,8 +1,8 @@
-using HTTPServerProject.Tests.ReadStream;
-using HTTPServerProject.Proxy.Response;
-using HTTPServerProject.Tests.WriteStream;
+using HTTPServerReadTests.Streams;
+using HTTPServerProxy.Response;
+using HTTPServerWriteTests.Streams;
 
-namespace HTTPServerProject.Tests.Proxy.Response;
+namespace HTTPServerProxyTests.Response;
 
 public class UnitTestsForProxyResponse
 {

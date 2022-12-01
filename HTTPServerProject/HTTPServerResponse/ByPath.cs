@@ -3,18 +3,17 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using System.Text.Json;
-using HTTPServerProject.Responses;
-using HTTPServerProject.Responses.Write;
-using HTTPServerProject.WriteStream;
+using HTTPServerWrite.Response;
+using HTTPServerWrite.Streams;
 
-namespace HTTPServerProject.Path;
+namespace HTTPServerResponse.Path;
 
-    public class RequestPath
+    public class ResponsePath
     {
         IWriteStreams writer;
 
         Dictionary<string, Dictionary<string, Dictionary<string, object>>> pathDict = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
-        public RequestPath(IWriteStreams w, Dictionary<string, Dictionary<string, Dictionary<string, object>>> dict = default!)
+        public ResponsePath(IWriteStreams w, Dictionary<string, Dictionary<string, Dictionary<string, object>>> dict = default!)
         {
             writer = w;
             pathDict = dict;

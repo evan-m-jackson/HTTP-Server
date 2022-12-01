@@ -1,7 +1,7 @@
-using HTTPServerProject.Tests.ReadStream;
-using HTTPServerProject.ReadHeaders;
+using HTTPServerReadTests.Streams;
+using HTTPServerRead.Header;
 
-namespace HTTPServerProject.Tests.ReadHeaders;
+namespace HTTPServerReadTests.HeaderTests;
 
 public class UnitTestsForReadingHeaders
 {

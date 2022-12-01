@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 
-namespace HTTPServerProject.Proxy.Client;
+namespace HTTPServerProxy.Client;
 
 public interface IProxyClient
 {
