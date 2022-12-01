@@ -1,6 +1,6 @@
-using HTTPServerProject.WriteStream;
+using HTTPServerWrite.Streams;
 
-namespace HTTPServerProject.Requests.Write;
+namespace HTTPServerWrite.Request;
 
 public class WriteRequest
 {

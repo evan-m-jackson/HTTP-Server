@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Collections.Generic;
 
-namespace HTTPServerProject.WriteStream;
+namespace HTTPServerWrite.Streams;
 
     public interface IWriteStreams
     {

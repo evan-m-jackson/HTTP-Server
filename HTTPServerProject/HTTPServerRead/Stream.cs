@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Collections.Generic;
 
-namespace HTTPServerProject.ReadStream;
+namespace HTTPServerRead.Streams;
 
     public interface IReadStreams
     {

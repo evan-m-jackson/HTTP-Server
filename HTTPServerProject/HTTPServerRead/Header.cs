@@ -2,9 +2,9 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.ReadStream;
+using HTTPServerRead.Streams;
 
-namespace HTTPServerProject.ReadHeaders;
+namespace HTTPServerRead.Header;
 
     public class Header
     {

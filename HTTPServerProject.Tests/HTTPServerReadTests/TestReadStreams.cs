@@ -1,6 +1,6 @@
-using HTTPServerProject.ReadStream;
+using HTTPServerRead.Streams;
 
-namespace HTTPServerProject.Tests.ReadStream;
+namespace HTTPServerReadTests.Streams;
 
 public class TestReadStreams : IReadStreams
 {

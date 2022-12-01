@@ -1,7 +1,7 @@
-using HTTPServerProject.Tests.WriteStream;
-using HTTPServerProject.Responses.Write;
+using HTTPServerWriteTests.Streams;
+using HTTPServerWrite.Response;
 
-namespace HTTPServerProject.Tests.WriteResponses;
+namespace HTTPServerWriteTests.ResponseTests;
 
 public class UnitTestsForWritingResponses
 {

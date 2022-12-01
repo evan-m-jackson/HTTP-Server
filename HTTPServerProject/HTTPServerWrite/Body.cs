@@ -1,16 +1,16 @@
-using HTTPServerProject.WriteStream;
+using HTTPServerWrite.Streams;
 
-namespace HTTPServerProject.Responses.Body;
+namespace HTTPServerWrite.Body;
 
-public class ResponseBody
+public class WriteBody
 {
     IWriteStreams writer;
-    public ResponseBody(IWriteStreams w)
+    public WriteBody(IWriteStreams w)
     {
         writer = w;
     }
 
-    public void WriteResponseBody(string input)
+    public void WriteBodyToStream(string input)
     {
         if (input.Length > 0)
         {

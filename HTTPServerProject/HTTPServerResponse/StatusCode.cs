@@ -1,4 +1,4 @@
-namespace HTTPServerProject.Responses.Code;
+namespace HTTPServerResponse.StatusCode;
 
 public class ResponseCode
 {

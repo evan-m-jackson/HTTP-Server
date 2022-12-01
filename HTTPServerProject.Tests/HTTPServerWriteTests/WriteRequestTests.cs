@@ -1,13 +1,13 @@
-using HTTPServerProject.ReadHeaders;
-using HTTPServerProject.ReadBody;
-using HTTPServerProject.Tests.ReadStream;
-using HTTPServerProject.Tests.WriteStream;
-using HTTPServerProject.Requests.Write;
-using HTTPServerProject.Tests.Proxy.Client;
-using HTTPServerProject.Responses.Write;
-using HTTPServerProject.Proxy.Response;
+using HTTPServerRead.Header;
+using HTTPServerRead.Body;
+using HTTPServerReadTests.Streams;
+using HTTPServerWriteTests.Streams;
+using HTTPServerWrite.Request;
+using HTTPServerProxyTests.Client;
+using HTTPServerWrite.Response;
+using HTTPServerProxy.Response;
 
-namespace HTTPServerProject.ProxyServerTests;
+namespace HTTPServerWriteTests.RequestTests;
 
 public class UnitTestsWritingRequests
 {

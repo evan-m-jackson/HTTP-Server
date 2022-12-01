@@ -1,10 +1,10 @@
-using HTTPServerProject.ReadStream;
-using HTTPServerProject.ReadHeaders;
-using HTTPServerProject.ReadBody;
-using HTTPServerProject.Responses.Write;
-using HTTPServerProject.WriteStream;
+using HTTPServerRead.Streams;
+using HTTPServerRead.Header;
+using HTTPServerRead.Body;
+using HTTPServerWrite.Response;
+using HTTPServerWrite.Streams;
 
-namespace HTTPServerProject.Proxy.Response;
+namespace HTTPServerProxy.Response;
 
 public class ProxyResponse
 {
