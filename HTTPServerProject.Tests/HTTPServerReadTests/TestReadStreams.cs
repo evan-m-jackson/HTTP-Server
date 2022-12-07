@@ -48,6 +48,20 @@ public class TestReadStreams : IReadStreams
         }
     }
 
+    public string ReadToEnd()
+    {
+        var result = "";
+
+        while ( sArr.Count > 0)
+        {
+            var input = sArr[0];
+            result += input;
+            sArr.RemoveAt(0);
+        }
+
+        return result;
+    }
+
     public int Peek()
     {
         if (sArr.Count == 0)

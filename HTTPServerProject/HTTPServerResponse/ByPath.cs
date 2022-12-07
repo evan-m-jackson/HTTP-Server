@@ -1,8 +1,3 @@
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.IO;
-using System.Text.Json;
 using HTTPServerWrite.Response;
 using HTTPServerWrite.Streams;
 
@@ -10,50 +5,50 @@ namespace HTTPServerResponse.Path;
 
     public class ResponsePath
     {
-        IWriteStreams writer;
+        IWriteStreams _writer;
 
-        Dictionary<string, Dictionary<string, Dictionary<string, object>>> pathDict = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
-        public ResponsePath(IWriteStreams w, Dictionary<string, Dictionary<string, Dictionary<string, object>>> dict = default!)
+        Dictionary<string, Dictionary<string, Dictionary<string, object>>> _dict = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
+        public ResponsePath(IWriteStreams writer, Dictionary<string, Dictionary<string, Dictionary<string, object>>> dict = default!)
         {
-            writer = w;
-            pathDict = dict;
+            _writer = writer;
+            _dict = dict;
         }
 
         public void ExecuteRequest(string path, string type, string requestBody)
         {
-            if (pathDict.ContainsKey(path))
+            if (_dict.ContainsKey(path))
             {
-                if (pathDict[path].ContainsKey(type))
+                if (_dict[path].ContainsKey(type))
                 {
-                Dictionary<string, object> paramDict = pathDict[path][type];
+                Dictionary<string, object> paramDict = _dict[path][type];
                 int code = (int)paramDict["Status Code"];
                 List<string> headers = (List<string>)paramDict["Headers"];
                 string body = (string)paramDict["Body"];
 
-                var response = new WriteResponse(writer, code, body, headers);
+                var response = new WriteResponse(_writer, code, body, headers);
                 response.GetResponse();
                 }
                 else
                 {
-                    var response = new WriteResponse(writer, 405, "");
+                    var response = new WriteResponse(_writer, 405, "");
                     response.GetResponse();
                 }
             }
 
             else if (path == "echo_body")
             {
-                var response = new WriteResponse(writer, 200, requestBody);
+                var response = new WriteResponse(_writer, 200, requestBody);
                 response.GetResponse();
             }
 
             else if (path == "")
             {
-                var response = new WriteResponse(writer, 200);
+                var response = new WriteResponse(_writer, 200);
                 response.GetResponse();
             }
             else
             {
-                var response = new WriteResponse(writer, 404);
+                var response = new WriteResponse(_writer, 404);
                 response.GetResponse();
             }
         }

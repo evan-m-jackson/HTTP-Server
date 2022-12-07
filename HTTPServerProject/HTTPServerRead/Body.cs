@@ -1,30 +1,26 @@
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.IO;
 using HTTPServerRead.Streams;
 
 namespace HTTPServerRead.Body;
 
     public class Body
     {
-        IReadStreams reader;
+        IReadStreams _reader;
 
-        public Body(IReadStreams r)
+        public Body(IReadStreams reader)
         {
-            reader = r;
+            _reader = reader;
         }
 
         public string GetBody()
         {
-            var input = reader.Peek();
+            var input = _reader.Peek();
             var result = "";
             while ((input != -1))
             {
-                var r = reader.Read();
+                var r = _reader.Read();
                 var c = (char)r;
                 result += c;
-                input = reader.Peek();
+                input = _reader.Peek();
             }
             return result;
         }

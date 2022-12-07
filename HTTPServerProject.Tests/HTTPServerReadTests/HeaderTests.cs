@@ -70,4 +70,16 @@ public class UnitTestsForReadingHeaders
 
         Assert.Equal(200, proxyStatusCode);
     }
+
+    [Fact]
+    public void GetStatusCodeFromDirtyLineTest()
+    {
+        var proxyStream = new List<string>() { "[{'id':1},{'id':2},{'id':3},{'id':4}]HTTP/1.1 200 OK", "Allow: GET, OPTIONS", "", "Hello World" };
+        var proxyReader = new TestReadStreams(proxyStream);
+        var proxyResponseHeader = new Header(proxyReader);
+        var proxyStatusLine = proxyResponseHeader.GetLine();
+        var proxyStatusCode = proxyResponseHeader.GetCode(proxyStatusLine);
+
+        Assert.Equal(200, proxyStatusCode);
+    }
 }
