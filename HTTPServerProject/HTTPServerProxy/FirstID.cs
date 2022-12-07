@@ -26,9 +26,8 @@ public class FirstID
     }
 
 	public string GetFirstIndex()
-	{
-        WriteToDoListRequest();
-        var body = GetToDoList();
+    {
+        var body = RunToListRequest();
         if (ListEmpty(body))
         {
             return "1";
@@ -36,13 +35,6 @@ public class FirstID
         var result = GetID(body);
         return result;
 	}
-
-    public string GetInitialLine(string method, string path)
-    {
-        var initialLine = $"{method} /{path} HTTP/1.1";
-        return initialLine;
-    }
-
     public string GetID(string body)
     {
         var foundInt = false;
@@ -69,7 +61,27 @@ public class FirstID
 	public bool ListEmpty(string body)
     {
         var todoListLength = body.Length;
-        return todoListLength <= 2;
+        return todoListLength == 2;
+    }
+    
+    public string RunToListRequest()
+    {
+        var body = "";
+        while (body.Length == 0)
+        {
+            WriteToDoListRequest();
+            body = GetToDoList();    
+        }
+
+        return body;
+    }
+    
+    public string GetToDoList()
+    {
+        var initialLine = _header.GetLine();
+        var headers = _header.GetHeaders();
+        var todoList = _body.GetBody();
+        return todoList;
     }
 
     public void WriteToDoListRequest()
@@ -78,11 +90,10 @@ public class FirstID
         var todoListRequest = new WriteRequest(_writer, initialLine);
         todoListRequest.GetRequest();
     }
-
-    public string GetToDoList()
+    
+    public string GetInitialLine(string method, string path)
     {
-        var headers = _header.GetHeaders();
-        var todoList = _body.GetBody();
-        return todoList;
+        var initialLine = $"{method} /{path} HTTP/1.1";
+        return initialLine;
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.Text;
 using HTTPServerRead.Streams;
 using HTTPServerRead.Header;
 using HTTPServerRead.Body;
@@ -56,18 +57,18 @@ namespace HTTPServerProject;
 				{
 					var firstID = new FirstID(proxyReader, proxyWriter, httpPath, httpType);
 					var id = firstID.GetFirstIndex();
-                    initialLine = initialLine.Replace("todo/1", $"todo/{id}");
+                    initialLine = initialLine.Replace("todo/1", $"todo/{id}");	
 				}
 
                 if (httpType == "DELETE")
                 {
                     initialLine = initialLine.Replace("todo", "todo-delete");
                 }
-
+				
                 var proxyRequest = new WriteRequest(proxyWriter, initialLine, rHeader, bodyString);
                 proxyRequest.GetRequest();
 
-                Console.WriteLine(proxyStream.DataAvailable);
+                
                 var proxyResponse = new ProxyResponse(proxyReader, writer, httpPath, httpType);
                 proxyResponse.GetResponse();
             }
