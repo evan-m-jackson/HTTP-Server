@@ -8,7 +8,7 @@ namespace HTTPServerResponse.Path;
         IWriteStreams _writer;
 
         Dictionary<string, Dictionary<string, Dictionary<string, object>>> _dict = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
-        public ResponsePath(IWriteStreams writer, Dictionary<string, Dictionary<string, Dictionary<string, object>>> dict = default!)
+        public ResponsePath(IWriteStreams writer, Dictionary<string, Dictionary<string, Dictionary<string, object>>> dict)
         {
             _writer = writer;
             _dict = dict;
