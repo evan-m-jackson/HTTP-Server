@@ -5,62 +5,60 @@ namespace HTTPServerWrite.Response;
 
     public class WriteResponse
     {
-        IWriteStreams streamWriter;
-        public List<string> resHeaders = new List<string>();
-        int statusCode;
-
-        string resBody;
+        IWriteStreams _writer;
+        public List<string> _headers = new List<string>();
+        int _code;
+        string _body;
 
         public WriteResponse(IWriteStreams writer, int code, string body = "", List<string> headers = default!)
         {
-            streamWriter = writer;
-            statusCode = code;
-            resBody = body;
-            resHeaders = headers;
+            _writer = writer;
+            _code = code;
+            _body = body;
+            _headers = headers;
         }
         public void GetResponse()
         {
             WriteResponseStatusCode();
             WriteResponseHeaders();
-            streamWriter.WriteLine();
+            _writer.WriteLine();
             WriteResponseBody();
         }
 
         public void WriteResponseHeaders()
         {
-            if (resHeaders != default)
+            if (_headers != default)
             {
-            foreach (var name in resHeaders)
-            {
-                streamWriter.WriteLine($"{name}");
-            }
+                foreach (var name in _headers)
+                {
+                    _writer.WriteLine($"{name}");
+                }
             }
         }
 
         public void AddHeader(string name, string description = default!)
         {
-            resHeaders.Add(name);
+            _headers.Add(name);
         }
 
         public void WriteResponseBody()
         {
-            if (resBody.Length > 0)
+            if (_body.Length > 0)
             {
-                streamWriter.Write(resBody);
-                streamWriter.Flush();
+                _writer.Write(_body);
+                _writer.Flush();
             }
             else
             {
-                streamWriter.Flush();
+                _writer.Flush();
             }
 
         }
 
         public void WriteResponseStatusCode()
         {
-            var sc = new ResponseCode(statusCode);
+            var sc = new ResponseCode(_code);
             var message = sc.GetStatus();
-            streamWriter.WriteLine(message);
+            _writer.WriteLine(message);
         }
-
     }

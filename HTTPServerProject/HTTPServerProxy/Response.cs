@@ -30,7 +30,6 @@ public class ProxyResponse
         var code = GetStatusCode();
         var headers = GetHeaders();
         var body = GetBody();
-        
         if (_type == "POST")
         {
             if (code == 200)
@@ -38,7 +37,6 @@ public class ProxyResponse
                 GetFullJSONContentType(headers);
                 if (body.StartsWith('{') && body.EndsWith('}') && body.Length > 2)
                 {
-                    Console.WriteLine(body);
                     var response = new WriteResponse(_writer, 201, body, headers);
                     response.GetResponse();
                 }
@@ -53,14 +51,12 @@ public class ProxyResponse
                 var response = new WriteResponse(_writer, code);
                 response.GetResponse();
             }
-        }
-        
+        }  
         else if (_type == "PUT")
         {
             if (code == 200)
             {
                 GetFullJSONContentType(headers);
-                Console.WriteLine(body);
                 if (body.StartsWith('{') && body.EndsWith('}') && body.Length > 2)
                 {
                     var response = new WriteResponse(_writer, 200, body, headers);
@@ -78,7 +74,6 @@ public class ProxyResponse
                 response.GetResponse();
             }
         }
-        
         else if (_type == "DELETE")
         {
             var response = new WriteResponse(_writer, 204);
@@ -89,7 +84,9 @@ public class ProxyResponse
     private int GetStatusCode()
     {
         var proxyStatusLine = _header.GetLine();
+        Console.WriteLine(proxyStatusLine);
         var proxyStatusCode = _header.GetCode(proxyStatusLine);
+        Console.WriteLine(proxyStatusCode);
         return proxyStatusCode;
     }
 
@@ -120,5 +117,5 @@ public class ProxyResponse
             var idx = headers.IndexOf(oldJSONHeader);
             headers[idx] = newJSONHeader;
         }
-    }
+    } 
 }

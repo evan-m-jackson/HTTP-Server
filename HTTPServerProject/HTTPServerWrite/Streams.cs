@@ -1,9 +1,3 @@
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.IO;
-using System.Collections.Generic;
-
 namespace HTTPServerWrite.Streams;
 
     public interface IWriteStreams
@@ -16,39 +10,39 @@ namespace HTTPServerWrite.Streams;
 
     public class WriteStreams : IWriteStreams
     {
-        Stream rStream = new MemoryStream();
-        StreamWriter writer;
+        Stream _stream = new MemoryStream();
+        StreamWriter _writer;
 
         public WriteStreams(Stream stream)
         {
-            rStream = stream;
-            writer = new StreamWriter(stream);
+            _stream = stream;
+            _writer = new StreamWriter(stream);
         }
 
         public void Write(string str = default!)
         {
-            writer.Write(str);
+            _writer.Write(str);
         }
 
         public void WriteLine(string str = default!)
         {
             if (str == default!)
             {
-                writer.WriteLine();
+                _writer.WriteLine();
             }
             else
             {
-                writer.WriteLine(str);
+                _writer.WriteLine(str);
             }
         }
 
         public void Flush()
         {
-            writer.Flush();
+            _writer.Flush();
         }
 
         public void Close()
         {
-            writer.Close();
+            _writer.Close();
         }
     }

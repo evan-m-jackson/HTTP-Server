@@ -4,41 +4,45 @@ namespace HTTPServerWrite.Request;
 
 public class WriteRequest
 {
-    IWriteStreams streamWriter;
-    string initialLine;
-    List<string> reqHeaders;
-    string reqBody;
+    IWriteStreams _writer;
+    string _initialLine;
+    List<string> _headers;
+    string _body;
     
-    public WriteRequest(IWriteStreams writer, string iL, List<string> rH, string rB)
+    public WriteRequest(IWriteStreams writer, string initialLine, List<string> headers = default!, string body = "")
     {
-        streamWriter = writer;
-        initialLine = iL;
-        reqHeaders = rH;
-        reqBody = rB;
+        _writer = writer;
+        _initialLine = initialLine;
+        _headers = headers;
+        _body = body;
     }
 
     public void GetRequest()
     {
-        streamWriter.WriteLine(initialLine);
+        _writer.WriteLine(_initialLine);
         WriteRequestHeaders();
         WriteRequestBody();
     }
 
     public void WriteRequestHeaders()
     {
-        foreach(var header in reqHeaders)
+        if (_headers != default)
         {
-            streamWriter.WriteLine(header);
+            foreach(var header in _headers)
+            {
+                
+                _writer.WriteLine(header);
+            }   
         }
-        streamWriter.WriteLine();
+        _writer.WriteLine();
     }
 
     public void WriteRequestBody()
     {
-        if (reqBody.Length > 0)
+        if (_body.Length > 0)
         {
-            streamWriter.Write(reqBody);
+            _writer.Write(_body);
         }
-        streamWriter.Flush();
+        _writer.Flush();
     }
 }

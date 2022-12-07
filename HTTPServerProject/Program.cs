@@ -13,6 +13,7 @@ using HTTPServerResponse.Parameters;
 using HTTPServerWrite.Request;
 using HTTPServerProxy.Client;
 using HTTPServerProxy.Response;
+using HTTPServerProxy.FirstID;
 
 namespace HTTPServerProject;
 
@@ -51,6 +52,13 @@ namespace HTTPServerProject;
                 var proxyWriter = new WriteStreams(proxyStream);
                 var proxyReader = new ReadStreams(proxyStream);
 
+				if (httpPath == "todo/1")
+				{
+					var firstID = new FirstID(proxyReader, proxyWriter, httpPath, httpType);
+					var id = firstID.GetFirstIndex();
+                    initialLine = initialLine.Replace("todo/1", $"todo/{id}");
+				}
+
                 if (httpType == "DELETE")
                 {
                     initialLine = initialLine.Replace("todo", "todo-delete");
@@ -59,6 +67,7 @@ namespace HTTPServerProject;
                 var proxyRequest = new WriteRequest(proxyWriter, initialLine, rHeader, bodyString);
                 proxyRequest.GetRequest();
 
+                Console.WriteLine(proxyStream.DataAvailable);
                 var proxyResponse = new ProxyResponse(proxyReader, writer, httpPath, httpType);
                 proxyResponse.GetResponse();
             }
@@ -71,9 +80,6 @@ namespace HTTPServerProject;
                 var execute = new ResponsePath(writer, pathDict);
                 execute.ExecuteRequest(httpPath, httpType, bodyString);    
             }
-            
-            Console.WriteLine("Message received: " + bodyString);
-            Console.WriteLine("Message sent back: " + bodyString.GetType());
 
             Console.WriteLine("Closing the connection.");
 

@@ -4,23 +4,22 @@ namespace HTTPServerWrite.Body;
 
 public class WriteBody
 {
-    IWriteStreams writer;
-    public WriteBody(IWriteStreams w)
+    IWriteStreams _writer;
+    public WriteBody(IWriteStreams writer)
     {
-        writer = w;
+        _writer = writer;
     }
 
     public void WriteBodyToStream(string input)
     {
         if (input.Length > 0)
         {
-            writer.Write(input);
-            writer.Flush();
+            _writer.Write(input);
+            _writer.Flush();
         }
         else
         {
-            writer.Flush();
+            _writer.Flush();
         }
-
     }
 }
