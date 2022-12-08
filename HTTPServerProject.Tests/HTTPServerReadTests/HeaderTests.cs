@@ -1,7 +1,7 @@
-using HTTPServerProject.Tests.ReadStream;
-using HTTPServerProject.ReadHeaders;
+using HTTPServerReadTests.Streams;
+using HTTPServerRead.Header;
 
-namespace HTTPServerProject.Tests.ReadHeaders;
+namespace HTTPServerReadTests.HeaderTests;
 
 public class UnitTestsForReadingHeaders
 {
@@ -57,5 +57,29 @@ public class UnitTestsForReadingHeaders
         var headers = header.GetHeaders();
 
         Assert.Equal(headers, expected);
+    }
+    
+    [Fact]
+    public void GetStatusCodeNumberTest()
+    {
+        var proxyStream = new List<string>() { "HTTP/1.1 200 OK", "Allow: GET, OPTIONS", "", "Hello World" };
+        var proxyReader = new TestReadStreams(proxyStream);
+        var proxyResponseHeader = new Header(proxyReader);
+        var proxyStatusLine = proxyResponseHeader.GetLine();
+        var proxyStatusCode = proxyResponseHeader.GetCode(proxyStatusLine);
+
+        Assert.Equal(200, proxyStatusCode);
+    }
+
+    [Fact]
+    public void GetStatusCodeFromDirtyLineTest()
+    {
+        var proxyStream = new List<string>() { "[{'id':1},{'id':2},{'id':3},{'id':4}]HTTP/1.1 200 OK", "Allow: GET, OPTIONS", "", "Hello World" };
+        var proxyReader = new TestReadStreams(proxyStream);
+        var proxyResponseHeader = new Header(proxyReader);
+        var proxyStatusLine = proxyResponseHeader.GetLine();
+        var proxyStatusCode = proxyResponseHeader.GetCode(proxyStatusLine);
+
+        Assert.Equal(200, proxyStatusCode);
     }
 }

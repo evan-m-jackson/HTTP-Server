@@ -1,10 +1,4 @@
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.IO;
-using System.Collections.Generic;
-
-namespace HTTPServerProject.ReadStream;
+namespace HTTPServerRead.Streams;
 
     public interface IReadStreams
     {
@@ -12,39 +6,46 @@ namespace HTTPServerProject.ReadStream;
         string ReadLine();
         int Peek();
         void Close();
+        string ReadToEnd();
     }
 
     public class ReadStreams : IReadStreams
     {
-        Stream rStream;
-        StreamReader reader;
+        Stream _stream;
+        StreamReader _reader;
 
         public ReadStreams(Stream stream)
         {
-            rStream = stream;
-            reader = new StreamReader(stream);
+            _stream = stream;
+            _reader = new StreamReader(stream);
         }
 
         public string ReadLine()
         {
-            var input = reader.ReadLine()!;
+            var input = _reader.ReadLine()!;
             return input;
         }
 
         public int Read()
         {
-            var input = reader.Read();
+            var input = _reader.Read();
+            return input;
+        }
+
+        public string ReadToEnd()
+        {
+            var input = _reader.ReadToEnd();
             return input;
         }
 
         public int Peek()
         {
-            var input = reader.Peek();
+            var input = _reader.Peek();
             return input;
         }
 
         public void Close()
         {
-            reader.Close();
+            _reader.Close();
         }
     }

@@ -3,13 +3,18 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.ReadStream;
-using HTTPServerProject.ReadHeaders;
-using HTTPServerProject.ReadBody;
-using HTTPServerProject.Responses;
-using HTTPServerProject.WriteStream;
-using HTTPServerProject.Path;
-using HTTPServerProject.Parameters;
+using System.Text;
+using HTTPServerRead.Streams;
+using HTTPServerRead.Header;
+using HTTPServerRead.Body;
+using HTTPServerWrite.Response;
+using HTTPServerWrite.Streams;
+using HTTPServerResponse.Path;
+using HTTPServerResponse.Parameters;
+using HTTPServerWrite.Request;
+using HTTPServerProxy.Client;
+using HTTPServerProxy.Response;
+using HTTPServerProxy.FirstID;
 
 namespace HTTPServerProject;
 
@@ -40,15 +45,42 @@ namespace HTTPServerProject;
 
             var httpType = header.GetRequestType(initialLine);
             var httpPath = header.GetPath(initialLine);
+            
+            if (httpPath.Substring(0, 4) == "todo")
+            {
+                var proxyClient = new ProxyClient();
+                var proxyStream = proxyClient.GetStream();
+                var proxyWriter = new WriteStreams(proxyStream);
+                var proxyReader = new ReadStreams(proxyStream);
 
-            var pathParams = new PathParameters();
-            var pathDict = pathParams.pathDict;
+				if (httpPath == "todo/1")
+				{
+					var firstID = new FirstID(proxyReader, proxyWriter, httpPath, httpType);
+					var id = firstID.GetFirstIndex();
+                    initialLine = initialLine.Replace("todo/1", $"todo/{id}");	
+				}
 
-            var execute = new RequestPath(writer, pathDict);
-            execute.ExecuteRequest(httpPath, httpType, bodyString);
+                if (httpType == "DELETE")
+                {
+                    initialLine = initialLine.Replace("todo", "todo-delete");
+                }
+				
+                var proxyRequest = new WriteRequest(proxyWriter, initialLine, rHeader, bodyString);
+                proxyRequest.GetRequest();
 
-            Console.WriteLine("Message received: " + bodyString);
-            Console.WriteLine("Message sent back: " + bodyString.GetType());
+                
+                var proxyResponse = new ProxyResponse(proxyReader, writer, httpPath, httpType);
+                proxyResponse.GetResponse();
+            }
+
+            else
+            {
+                var pathParams = new PathParameters();
+                var pathDict = pathParams.pathDict;
+
+                var execute = new ResponsePath(writer, pathDict);
+                execute.ExecuteRequest(httpPath, httpType, bodyString);    
+            }
 
             Console.WriteLine("Closing the connection.");
 

@@ -1,6 +1,6 @@
-using HTTPServerProject.ReadStream;
+using HTTPServerRead.Streams;
 
-namespace HTTPServerProject.Tests.ReadStream;
+namespace HTTPServerReadTests.Streams;
 
 public class TestReadStreams : IReadStreams
 {
@@ -13,9 +13,14 @@ public class TestReadStreams : IReadStreams
 
     public string ReadLine()
     {
+        if (sArr.Count > 0)
+        {
         var input = sArr[0];
         sArr.RemoveAt(0);
         return input;
+        }
+
+        return "";
     }
 
     public int Read()
@@ -43,8 +48,26 @@ public class TestReadStreams : IReadStreams
         }
     }
 
+    public string ReadToEnd()
+    {
+        var result = "";
+
+        while ( sArr.Count > 0)
+        {
+            var input = sArr[0];
+            result += input;
+            sArr.RemoveAt(0);
+        }
+
+        return result;
+    }
+
     public int Peek()
     {
+        if (sArr.Count == 0)
+        {
+            return -1;
+        }
         var input = sArr[0];
         if (input == "")
         {

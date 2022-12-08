@@ -1,0 +1,56 @@
+using HTTPServerWrite.Response;
+using HTTPServerWrite.Streams;
+
+namespace HTTPServerResponse.Path;
+
+    public class ResponsePath
+    {
+        IWriteStreams _writer;
+
+        Dictionary<string, Dictionary<string, Dictionary<string, object>>> _dict = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
+        public ResponsePath(IWriteStreams writer, Dictionary<string, Dictionary<string, Dictionary<string, object>>> dict)
+        {
+            _writer = writer;
+            _dict = dict;
+        }
+
+        public void ExecuteRequest(string path, string type, string requestBody)
+        {
+            if (_dict.ContainsKey(path))
+            {
+                if (_dict[path].ContainsKey(type))
+                {
+                Dictionary<string, object> paramDict = _dict[path][type];
+                int code = (int)paramDict["Status Code"];
+                List<string> headers = (List<string>)paramDict["Headers"];
+                string body = (string)paramDict["Body"];
+
+                var response = new WriteResponse(_writer, code, body, headers);
+                response.GetResponse();
+                }
+                else
+                {
+                    var response = new WriteResponse(_writer, 405, "");
+                    response.GetResponse();
+                }
+            }
+
+            else if (path == "echo_body")
+            {
+                var response = new WriteResponse(_writer, 200, requestBody);
+                response.GetResponse();
+            }
+
+            else if (path == "")
+            {
+                var response = new WriteResponse(_writer, 200);
+                response.GetResponse();
+            }
+            else
+            {
+                var response = new WriteResponse(_writer, 404);
+                response.GetResponse();
+            }
+        }
+
+    }
