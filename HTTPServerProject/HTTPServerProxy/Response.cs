@@ -66,9 +66,7 @@ public class ProxyResponse
     private int GetStatusCode()
     {
         var proxyStatusLine = _header.GetLine();
-        Console.WriteLine(proxyStatusLine);
         var proxyStatusCode = _header.GetCode(proxyStatusLine);
-        Console.WriteLine(proxyStatusCode);
         return proxyStatusCode;
     }
 
