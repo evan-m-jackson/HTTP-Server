@@ -1,4 +1,4 @@
-namespace HTTPServerProject.Parameters;
+namespace HTTPServerResponse.Parameters;
 
 public interface IPathParameters
 {

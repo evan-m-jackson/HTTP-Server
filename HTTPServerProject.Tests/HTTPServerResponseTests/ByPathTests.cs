@@ -1,8 +1,8 @@
-using HTTPServerProject.Tests.WriteStream;
-using HTTPServerProject.Path;
-using HTTPServerProject.Tests.Parameters;
+using HTTPServerWriteTests.Streams;
+using HTTPServerResponse.Path;
+using HTTPServerResponseTests.Parameters;
 
-namespace HTTPServerProject.ResponseByPathTests;
+namespace HTTPServerResponseTests.PathTests;
 
 public class UnitTestsForResponsesByPath
 {
@@ -19,8 +19,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -36,8 +36,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -53,8 +53,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -70,8 +70,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -87,8 +87,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -104,8 +104,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -121,8 +121,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -138,8 +138,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -155,8 +155,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -172,8 +172,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -189,8 +189,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -206,8 +206,8 @@ public class UnitTestsForResponsesByPath
         var pathParams = new TestPathParameters();
         var pathDict = pathParams.pathDict;
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -223,8 +223,8 @@ public class UnitTestsForResponsesByPath
         var type = "GET";
         var requestBody = "";
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -240,8 +240,8 @@ public class UnitTestsForResponsesByPath
         var type = "GET";
         var requestBody = "";
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -257,8 +257,8 @@ public class UnitTestsForResponsesByPath
         var type = "GET";
         var requestBody = "";
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }
@@ -274,76 +274,8 @@ public class UnitTestsForResponsesByPath
         var type = "GET";
         var requestBody = "";
 
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
-
-        Assert.Equal(eStream, expected);
-    }
-
-    [Fact]
-    public void GetToDoTaskResponse()
-    {
-        var pathParams = new TestPathParameters();
-        var pathDict = pathParams.pathDict;
-        var expected = new List<string>() { "HTTP/1.1 201 Created", "Content-Type: application/json;charset=utf-8", "", "{\"key1\":\"value1\",\"key2\":\"value2\"}" };
-        var writer = new TestWriteStreams(eStream);
-        var path = "todo";
-        var type = "POST";
-        var requestBody = "{\"key1\":\"value1\",\"key2\":\"value2\"}";
-
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
-
-        Assert.Equal(eStream, expected);
-    }
-
-    [Fact]
-    public void GetMethodNotAllowedTest()
-    {
-        var pathParams = new TestPathParameters();
-        var pathDict = pathParams.pathDict;
-        var expected = new List<string>() { "HTTP/1.1 405 Method Not Allowed", "" };
-        var writer = new TestWriteStreams(eStream);
-        var path = "todo";
-        var type = "GET";
-        var requestBody = "";
-
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
-
-        Assert.Equal(eStream, expected);
-    }
-
-    [Fact]
-    public void ToDoTaskUnsupportedTypeTest()
-    {
-        var pathParams = new TestPathParameters();
-        var pathDict = pathParams.pathDict;
-        var expected = new List<string>() { "HTTP/1.1 415 Unsupported Media Type", "" };
-        var writer = new TestWriteStreams(eStream);
-        var path = "todo";
-        var type = "POST";
-        var requestBody = "<task>a new task</task>";
-
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
-
-        Assert.Equal(eStream, expected);
-    }
-
-    [Fact]
-    public void ToDoTaskInvalidTest()
-    {
-        var pathParams = new TestPathParameters();
-        var pathDict = pathParams.pathDict;
-        var expected = new List<string>() { "HTTP/1.1 400 Bad Request", "" };
-        var writer = new TestWriteStreams(eStream);
-        var path = "todo";
-        var type = "POST";
-        var requestBody = "task: new task";
-
-        var requestPath = new RequestPath(writer, pathDict);
-        requestPath.ExecuteRequest(path, type, requestBody);
+        var responsePath = new ResponsePath(writer, pathDict);
+        responsePath.ExecuteRequest(path, type, requestBody);
 
         Assert.Equal(eStream, expected);
     }

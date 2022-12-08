@@ -1,38 +1,32 @@
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.IO;
-using HTTPServerProject.ReadStream;
+using HTTPServerRead.Streams;
 
-namespace HTTPServerProject.ReadHeaders;
+namespace HTTPServerRead.Header;
 
     public class Header
     {
-        IReadStreams reader;
-        List<string> headers = new List<string>();
+        IReadStreams _reader;
+        List<string> _headers = new List<string>();
 
-        public Header(IReadStreams r)
+        public Header(IReadStreams reader)
         {
-            reader = r;
+            _reader = reader;
         }
 
         public string GetLine()
         {
-            var line = reader.ReadLine();
-            Console.WriteLine(line);
+            var line = _reader.ReadLine();
             return line;
         }
 
         public List<string> GetHeaders()
         {
-            var input = reader.ReadLine();
-            do
+            var input = _reader.ReadLine();
+            while (input != "")
             {
-                headers.Add(input);
-                input = reader.ReadLine();
-            } while (input != "");
-
-            return headers;
+                _headers.Add(input);
+                input = _reader.ReadLine();
+            } 
+            return _headers;
         }
 
         public string GetRequestType(string line)
@@ -56,7 +50,6 @@ namespace HTTPServerProject.ReadHeaders;
         {
             var read = false;
             var result = "";
-
             foreach (char c in line)
             {
                 if (!read && c == '/')
@@ -74,5 +67,20 @@ namespace HTTPServerProject.ReadHeaders;
             }
             return result;
         }
-
+        
+        public int GetCode(string statusLine)
+        {
+            var idx = 0;
+            if (statusLine[idx] == '[')
+            {
+                while ( statusLine[idx] != ']')
+                {
+                    idx += 1;
+                }
+                idx += 1;
+            } 
+            var start = idx + 9;
+            var codeString = statusLine.Substring(start,3);
+            return Int32.Parse(codeString);
+        }
     }

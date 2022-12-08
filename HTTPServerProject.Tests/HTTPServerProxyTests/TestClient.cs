@@ -1,6 +1,6 @@
-using HTTPServerProject.Proxy.Client;
+using HTTPServerProxy.Client;
 
-namespace HTTPServerProject.Tests.Proxy.Client;
+namespace HTTPServerProxyTests.Client;
 
 public class TestProxyClient : IProxyClient
 {
