@@ -33,4 +33,14 @@ public class PortTests
         var expected = 5000;
         Assert.Equal(expected, actual);
     }
+    
+    [Fact]
+    public void GetPort5000OutOfRangeTest()
+    {
+        var arg = new string[] { "65536" };
+        var newPort = new Port();
+        var actual = newPort.GetPort(arg);
+        var expected = 5000;
+        Assert.Equal(expected, actual);
+    }
 }
