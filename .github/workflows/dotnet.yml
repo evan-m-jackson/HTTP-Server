@@ -14,9 +14,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Setup Ruby
-      uses: ruby/set-up-ruby@v1
-      with:
-        ruby-version: '2.7.6' 
+      uses: actions/setup-ruby@v1
     - name: Restore dependencies
       run: dotnet restore HTTPServerProject
     - name: Build
@@ -24,9 +22,13 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal HTTPServerProject.Tests
     - name: Run
-      run: dotnet run --project HTTPServerProject
+      run: nohup dotnet run --project HTTPServerProject &
     - name: Acceptance Tests
       run:  | 
         cd http-server-spec
+        bundle install
         rake test:f1
+        rake test:f2
+        rake test:f3
+        rake test:f4
 
