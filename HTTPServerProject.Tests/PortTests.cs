@@ -17,13 +17,13 @@ public class PortTests
     [Fact]
     public void GetPort5000DefaultTest()
     {
-        var arg = new string[] {};
+        var arg = new string[] { };
         var newPort = new Port();
         var actual = newPort.GetPort(arg);
         var expected = 5000;
         Assert.Equal(expected, actual);
     }
-    
+
     [Fact]
     public void GetPort5000InvalidTest()
     {
@@ -33,7 +33,7 @@ public class PortTests
         var expected = 5000;
         Assert.Equal(expected, actual);
     }
-    
+
     [Fact]
     public void GetPort5000OutOfRangeTest()
     {

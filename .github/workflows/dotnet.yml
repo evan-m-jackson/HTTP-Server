@@ -30,5 +30,4 @@ jobs:
         rake test:f1
         rake test:f2
         rake test:f3
-        rake test:f4
 

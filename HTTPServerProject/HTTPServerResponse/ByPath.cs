@@ -25,19 +25,19 @@ namespace HTTPServerResponse.Path;
                 List<string> headers = (List<string>)paramDict["Headers"];
                 string body = (string)paramDict["Body"];
 
-                var response = new WriteResponse(_writer, code, body, headers);
+                var response = new WriteResponse(writer: _writer, code: code, body: body, headers: headers);
                 response.GetResponse();
                 }
                 else
                 {
-                    var response = new WriteResponse(_writer, 405, "");
+                    var response = new WriteResponse(writer: _writer, code: 405, body: "");
                     response.GetResponse();
                 }
             }
 
             else if (path == "echo_body")
             {
-                var response = new WriteResponse(_writer, 200, requestBody);
+                var response = new WriteResponse(writer: _writer, code: 200, body: requestBody);
                 response.GetResponse();
             }
 

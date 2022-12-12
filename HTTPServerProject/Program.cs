@@ -59,14 +59,14 @@ namespace HTTPServerProject;
                 var proxyWriter = new WriteStreams(proxyStream);
                 var proxyReader = new ReadStreams(proxyStream);
 
-				var firstId = new GetFirstID(proxyReader, proxyWriter, httpPath, httpType);
-				var updateIL = new UpdateInitialLine(proxyReader, proxyWriter, httpPath, httpType, firstId);
+				var firstId = new GetFirstID(reader: proxyReader, writer: proxyWriter, path: httpPath, type: httpType);
+				var updateIL = new UpdateInitialLine(reader: proxyReader, writer: proxyWriter, path: httpPath, type: httpType, firstId: firstId);
 				initialLine = updateIL.Run();
 				
-                var proxyRequest = new WriteRequest(proxyWriter, initialLine, rHeader, bodyString);
+                var proxyRequest = new WriteRequest(writer: proxyWriter, initialLine: initialLine, headers: rHeader, body: bodyString);
                 proxyRequest.GetRequest();
 
-                var proxyResponse = new ProxyResponse(proxyReader, writer, httpPath, httpType);
+                var proxyResponse = new ProxyResponse(reader: proxyReader, writer: writer, path: httpPath, type: httpType);
                 proxyResponse.GetResponse();
             }
             else
@@ -75,7 +75,7 @@ namespace HTTPServerProject;
                 var pathDict = pathParams.pathDict;
 
                 var execute = new ResponsePath(writer, pathDict);
-                execute.ExecuteRequest(httpPath, httpType, bodyString);    
+                execute.ExecuteRequest(path: httpPath, type: httpType, requestBody: bodyString);    
             }
 
             Console.WriteLine("Closing the connection.");

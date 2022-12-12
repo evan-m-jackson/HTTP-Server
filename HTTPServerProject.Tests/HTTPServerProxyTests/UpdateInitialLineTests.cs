@@ -17,8 +17,8 @@ public class InitialLineTests
         var proxyReader = new TestReadStreams(stream);
         var proxyWriter = new TestWriteStreams(stream);
 
-        var firstID = new TestGetFirstID(proxyReader, proxyWriter, path, method);
-        var updateIL = new UpdateInitialLine(proxyReader, proxyWriter, path, method, firstID);
+        var firstID = new TestGetFirstID(reader: proxyReader, writer: proxyWriter, path: path, type: method);
+        var updateIL = new UpdateInitialLine(reader: proxyReader, writer: proxyWriter, path: path, type: method, firstId: firstID);
         var actual = updateIL.Run();
 
         Assert.Equal(expected, actual);
