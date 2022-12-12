@@ -15,19 +15,23 @@ jobs:
         dotnet-version: 6.0.x
     - name: Setup Ruby
       uses: actions/setup-ruby@v1
+      with:
+        bundler-cache: true
     - name: Restore dependencies
       run: dotnet restore HTTPServerProject
     - name: Build
       run: dotnet build --no-restore HTTPServerProject
     - name: Test
-      run: dotnet test --no-build --verbosity normal HTTPServerProject.Tests
-    - name: Run
-      run: nohup dotnet run --project HTTPServerProject &
-    - name: Acceptance Tests
-      run:  | 
+      run:  |
+        nohup dotnet run --project HTTPServerProject &    
+        dotnet test --verbosity normal HTTPServerProject.Tests
+    - name: Install Bundle
+      run:  |
         cd http-server-spec
         bundle install
-        rake test:f1
-        rake test:f2
-        rake test:f3
+    - name: Acceptance Tests
+      run:  |
+        nohup dotnet run --project HTTPServerProject &
+        cd http-server-spec
+        bundle exec rake test:f1
 

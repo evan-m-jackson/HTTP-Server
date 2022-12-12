@@ -178,7 +178,7 @@ public class UnitTestsForResponsesByPath
 
         Assert.Equal(eStream, expected);
     }
-
+    
     [Fact]
     public void GetTextResponse()
     {
