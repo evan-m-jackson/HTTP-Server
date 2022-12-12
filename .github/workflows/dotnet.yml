@@ -23,9 +23,10 @@ jobs:
       run: dotnet build --no-restore HTTPServerProject
     - name: Test
       run: dotnet test --no-build --verbosity normal HTTPServerProject.Tests
+    - name: Run
+      run: dotnet run --project HTTPServerProject
     - name: Acceptance Tests
       run:  | 
-        dotnet run --project HTTPServerProject
         cd http-server-spec
         rake test:f1
 
