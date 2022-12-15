@@ -17,7 +17,7 @@ public class PathParameters : IPathParameters
         List<string> mOHeaders = new List<string>(){"Allow: GET, HEAD, OPTIONS"};
         pathDict.Add("method_options", GetTypeDict("OPTIONS", 200, mOHeaders, ""));
 
-        List<string> mOHeaders2 = new List<string>(){"Allow: GET, HEAD, OPTIONS, PUT"};
+        List<string> mOHeaders2 = new List<string>(){"Allow: GET, HEAD, OPTIONS, POST, PUT"};
         pathDict.Add("method_options2", GetTypeDict("OPTIONS", 200, mOHeaders2, ""));
 
         List<string> headHeaders = new List<string>(){"Allow: HEAD, OPTIONS"};

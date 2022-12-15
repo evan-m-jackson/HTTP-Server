@@ -34,4 +34,6 @@ jobs:
         nohup dotnet run --project HTTPServerProject &
         cd http-server-spec
         bundle exec rake test:f1
+        bundle exec rake test:f2
+        bundle exec rake test:f3
 
