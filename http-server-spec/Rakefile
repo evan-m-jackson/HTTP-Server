@@ -1,3 +1,5 @@
+require 'colorize'
+
 def is_server_running?(port)
   system("lsof -i:#{port}", out: '/dev/null')
 end
@@ -10,30 +12,37 @@ def server_not_running_error
 end
 
 def step_has_error?(command)
-    command = command.delete(' ')
-    stats = get_summary(command)    
+    summary = get_summary(command)
+    stats = get_stats(summary)
     return is_there_an_error?(stats)
 end
 
 def get_summary(output)
-    str1 = "StepsSummary:"
+    str1 = "Summary:"
     str1_length = str1.length
     str2 = "Finished"
     i1 = output.index(str1) + str1_length
     i2 = output.index(str2) - 1
     summary = output[i1..i2]
-    return get_summary_arr(summary)
+    return summary
 end
 
-def get_summary_arr(summary)
+def get_stats(summary)
     stats = summary.split(",")
-    stats = stats.slice(1, 4)
-    return stats
+    error_stats = stats.slice(1, 4)
+    return error_stats
+end
+
+def get_number(stat)
+    stat.delete(' ')
+    number = stat.uncolorize[2]
+    return number
 end
 
 def is_there_an_error?(stats)
-  stats.each do |stat| 
-    if stat[2] != "0"
+  stats.each do |stat|
+    num = get_number(stat)
+    if num != "0"
       return true
     end
   end
@@ -53,12 +62,7 @@ namespace :test do
   desc "Run all of the tests in 01_getting_started"
   task :f1 do
     if is_server_running?(5000)
-#       command = `bundle exec spinach --tags 01-getting-started`
-#       puts command
-      command = %x[echo `bundle exec spinach --tags 01-getting-started`]
-      if step_has_error?(command)
-        exit 1
-      end
+      puts `bundle exec spinach --tags 01-getting-started`
     else
       server_not_running_error()
     end
@@ -67,11 +71,7 @@ namespace :test do
   desc "Run all of the tests in 02_structured_data"
   task :f2 do
     if is_server_running?(5000)
-#       command = `bundle exec spinach --tags 02-structured-data`
-      command = %x[echo `bundle exec spinach --tags 02-structured-data`]
-      if step_has_error?(command)
-        exit 1
-      end
+      puts `bundle exec spinach --tags 02-structured-data`
     else
       server_not_running_error()
     end
@@ -80,11 +80,7 @@ namespace :test do
   desc "Run all of the tests in 03_file_server"
   task :f3 do
     if is_server_running?(5000)
-#       command = `bundle exec spinach --tags 03-file-server`
-      command = %x[echo `bundle exec spinach --tags 03-file-server`]
-      if step_has_error?(command)
-        exit 1
-      end
+      puts `bundle exec spinach --tags 03-file-server`
     else
       server_not_running_error()
     end
@@ -93,14 +89,36 @@ namespace :test do
   desc "Run all of the tests in 04_todo_list"
   task :f4 do
     if is_server_running?(5000)
-      command = `bundle exec spinach --tags 04-todo-list`
-      puts command
-      if step_has_error?(command)
-        exit 1
-      end
+      puts `bundle exec spinach --tags 04-todo-list`
     else
       server_not_running_error()
     end
+  end
+end
+
+namespace :acctest do
+  desc "Run all of the tests in 01_getting_started"
+  task :f1 do
+      command = %x[echo `bundle exec spinach --tags 01-getting-started`]
+      if step_has_error?(command)
+        exit 1
+      end
+  end
+
+  desc "Run all of the tests in 02_structured_data"
+  task :f2 do
+      command = %x[echo `bundle exec spinach --tags 02-structured-data`]
+      if step_has_error?(command)
+        exit 1
+      end
+  end
+
+  desc "Run all of the tests in 03_file_server"
+  task :f3 do
+      command = %x[echo `bundle exec spinach --tags 03-file-server`]
+      if step_has_error?(command)
+        exit 1
+      end
   end
 end
 
