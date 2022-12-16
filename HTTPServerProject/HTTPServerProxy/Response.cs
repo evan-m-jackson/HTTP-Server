@@ -46,7 +46,7 @@ public class ProxyResponse
                 GetFullJSONContentType(headers);
                 if (contentLength > 2)
                 {
-                    var response = new WriteResponse(_writer, status, body, headers);
+                    var response = new WriteResponse(writer: _writer, code: status, body: body, headers: headers);
                     response.GetResponse();
                 }
                 else

@@ -3,20 +3,11 @@ using HTTPServerRead.Header;
 using HTTPServerRead.Body;
 using HTTPServerWrite.Request;
 using HTTPServerWrite.Streams;
+using HTTPServerProxy.FirstID;
 
-namespace HTTPServerProxy.FirstID;
+namespace HTTPServerProxyTests.FirstID;
 
-public interface IGetFirstID
-{
-    string GetFirstIndex();
-    string GetID(string body);
-    bool ListEmpty(string body);
-    string RunToListRequest();
-    string GetToDoList();
-    void WriteToDoListRequest();
-    string GetInitialLine(string method, string path);
-}
-public class GetFirstID : IGetFirstID
+public class TestGetFirstID : IGetFirstID
 {
     IReadStreams _reader;
     IWriteStreams _writer;
@@ -25,7 +16,7 @@ public class GetFirstID : IGetFirstID
     string _path;
     string _type;
 
-    public GetFirstID(IReadStreams reader, IWriteStreams writer, string path, string type)
+    public TestGetFirstID(IReadStreams reader, IWriteStreams writer, string path, string type)
     {
         _reader = reader;
         _writer = writer;
@@ -35,16 +26,18 @@ public class GetFirstID : IGetFirstID
         _type = type;
     }
 
-	public string GetFirstIndex()
+    public string GetFirstIndex()
     {
         var body = RunToListRequest();
         if (ListEmpty(body))
         {
             return "1";
         }
+
         var result = GetID(body);
         return result;
-	}
+    }
+
     public string GetID(string body)
     {
         var foundInt = false;
@@ -65,27 +58,28 @@ public class GetFirstID : IGetFirstID
                 break;
             }
         }
+
         return result;
     }
 
-	public bool ListEmpty(string body)
+    public bool ListEmpty(string body)
     {
         var todoListLength = body.Length;
         return todoListLength == 2;
     }
-    
+
     public string RunToListRequest()
     {
         var body = "";
         while (body.Length == 0)
         {
             WriteToDoListRequest();
-            body = GetToDoList();    
+            body = GetToDoList();
         }
 
         return body;
     }
-    
+
     public string GetToDoList()
     {
         var initialLine = _header.GetLine();
@@ -96,11 +90,11 @@ public class GetFirstID : IGetFirstID
 
     public void WriteToDoListRequest()
     {
-        var initialLine = GetInitialLine("GET", "todo-ids");
-        var todoListRequest = new WriteRequest(_writer, initialLine);
-        todoListRequest.GetRequest();
+        _writer.WriteLine("HTTP/1.1 200 OK");
+        _writer.WriteLine();
+        _writer.Write("[{ 'id': 4 }]");
     }
-    
+
     public string GetInitialLine(string method, string path)
     {
         var initialLine = $"{method} /{path} HTTP/1.1";

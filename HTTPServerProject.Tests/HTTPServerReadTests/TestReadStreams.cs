@@ -15,9 +15,9 @@ public class TestReadStreams : IReadStreams
     {
         if (sArr.Count > 0)
         {
-        var input = sArr[0];
-        sArr.RemoveAt(0);
-        return input;
+            var input = sArr[0];
+            sArr.RemoveAt(0);
+            return input;
         }
 
         return "";
@@ -52,7 +52,7 @@ public class TestReadStreams : IReadStreams
     {
         var result = "";
 
-        while ( sArr.Count > 0)
+        while (sArr.Count > 0)
         {
             var input = sArr[0];
             result += input;

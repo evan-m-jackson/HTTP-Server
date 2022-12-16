@@ -8,16 +8,17 @@ public interface IPathParameters
 public class PathParameters : IPathParameters
 {
     public Dictionary<string, Dictionary<string, Dictionary<string, object>>> pathDict = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
-    
-    public PathParameters()
+    int port;
+    public PathParameters(int port)
     {
-        List<string> redirectHeaders = new List<string>(){"Location: http://127.0.0.1:5000/simple_get"};
+		this.port = port;
+        List<string> redirectHeaders = new List<string>(){$"Location: http://127.0.0.1:{port}/simple_get"};
         pathDict.Add("redirect", GetTypeDict("GET", 301, redirectHeaders, ""));
 
         List<string> mOHeaders = new List<string>(){"Allow: GET, HEAD, OPTIONS"};
         pathDict.Add("method_options", GetTypeDict("OPTIONS", 200, mOHeaders, ""));
 
-        List<string> mOHeaders2 = new List<string>(){"Allow: GET, HEAD, OPTIONS, PUT, POST"};
+        List<string> mOHeaders2 = new List<string>(){"Allow: GET, HEAD, OPTIONS, POST, PUT"};
         pathDict.Add("method_options2", GetTypeDict("OPTIONS", 200, mOHeaders2, ""));
 
         List<string> headHeaders = new List<string>(){"Allow: HEAD, OPTIONS"};

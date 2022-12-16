@@ -1,14 +1,10 @@
 name: .NET
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,9 +13,27 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+    - name: Setup Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        bundler-cache: true
     - name: Restore dependencies
       run: dotnet restore HTTPServerProject
     - name: Build
       run: dotnet build --no-restore HTTPServerProject
     - name: Test
-      run: dotnet test --no-build --verbosity normal HTTPServerProject.Tests
+      run:  |
+        dotnet run --project HTTPServerProject &    
+        dotnet test --verbosity normal HTTPServerProject.Tests 
+    - name: Install Bundle
+      run:  |
+        cd http-server-spec
+        bundle install
+    - name: Acceptance Tests
+      run:  |
+        dotnet run --project HTTPServerProject &
+        cd http-server-spec
+        bundle exec rake acctest:f1
+        bundle exec rake acctest:f2
+        bundle exec rake acctest:f3
+
