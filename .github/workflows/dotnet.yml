@@ -23,15 +23,15 @@ jobs:
       run: dotnet build --no-restore HTTPServerProject
     - name: Test
       run:  |
-        nohup dotnet run --project HTTPServerProject &    
-        dotnet test --verbosity normal HTTPServerProject.Tests
+        dotnet run --project HTTPServerProject &    
+        dotnet test --verbosity normal HTTPServerProject.Tests 
     - name: Install Bundle
       run:  |
         cd http-server-spec
         bundle install
     - name: Acceptance Tests
       run:  |
-        nohup dotnet run --project HTTPServerProject &
+        dotnet run --project HTTPServerProject &
         cd http-server-spec
         bundle exec rake acctest:f1
         bundle exec rake acctest:f2
