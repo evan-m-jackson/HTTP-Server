@@ -31,7 +31,7 @@ namespace HTTPServerProject;
             _client = tcpc;
         }
 
-        public void Conversation()
+        public void Conversation(int port = 5000)
         {
             var stream = _client.GetStream();
             var writer = new WriteStreams(stream);
@@ -71,7 +71,7 @@ namespace HTTPServerProject;
             }
             else
             {
-                var pathParams = new PathParameters();
+                var pathParams = new PathParameters(port);
                 var pathDict = pathParams.pathDict;
 
                 var execute = new ResponsePath(writer, pathDict);
@@ -100,7 +100,7 @@ namespace HTTPServerProject;
                 {
                     var server = new Server(listener.AcceptTcpClient());
 
-                    var serverThread = new Thread(new ThreadStart(server.Conversation));
+                    var serverThread = new Thread(() => server.Conversation(portNum));
 
                     serverThread.Start();
                 }
