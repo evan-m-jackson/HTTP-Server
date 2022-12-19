@@ -3,29 +3,37 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
-using HTTPServerProject.ReadStream;
-using HTTPServerProject.RequestHeaders;
-using HTTPServerProject.RequestBody;
-using HTTPServerProject.Responses;
-using HTTPServerProject.WriteStream;
-using HTTPServerProject.Path;
-using HTTPServerProject.Parameters;
+using System.Text;
+using HTTPServerRead.Streams;
+using HTTPServerProject.Ports;
+using HTTPServerProject.Update.Initial.Line;
+using HTTPServerRead.Header;
+using HTTPServerRead.Body;
+using HTTPServerWrite.Response;
+using HTTPServerWrite.Streams;
+using HTTPServerResponse.Path;
+using HTTPServerResponse.Parameters;
+using HTTPServerWrite.Request;
+using HTTPServerProxy.Check.Paths;
+using HTTPServerProxy.Client;
+using HTTPServerProxy.Response;
+using HTTPServerProxy.FirstID;
 
-namespace HTTPServerProject
-{
+namespace HTTPServerProject;
+
     public class Server
     {
 
-        TcpClient client;
+        TcpClient _client;
 
         public Server(TcpClient tcpc)
         {
-            client = tcpc;
+            _client = tcpc;
         }
 
-        public void Conversation()
+        public void Conversation(int port = 5000)
         {
-            var stream = client.GetStream();
+            var stream = _client.GetStream();
             var writer = new WriteStreams(stream);
             var reader = new ReadStreams(stream);
 
@@ -40,40 +48,59 @@ namespace HTTPServerProject
 
             var httpType = header.GetRequestType(initialLine);
             var httpPath = header.GetPath(initialLine);
+            
+			var checkPath = new CheckPath();
+			var isProxyPath = checkPath.IsTodoPath(httpPath);
 
-            var pathParams = new PathParameters();
-            var pathDict = pathParams.pathDict;
+            if (isProxyPath)
+            {
+                var proxyClient = new ProxyClient();
+                var proxyStream = proxyClient.GetStream();
+                var proxyWriter = new WriteStreams(proxyStream);
+                var proxyReader = new ReadStreams(proxyStream);
 
-            var execute = new RequestPath(writer, pathDict);
-            execute.ExecuteRequest(httpPath, httpType, bodyString);
+				var firstId = new GetFirstID(reader: proxyReader, writer: proxyWriter, path: httpPath, type: httpType);
+				var updateIL = new UpdateInitialLine(reader: proxyReader, writer: proxyWriter, path: httpPath, type: httpType, firstId: firstId);
+				initialLine = updateIL.Run();
+				
+                var proxyRequest = new WriteRequest(writer: proxyWriter, initialLine: initialLine, headers: rHeader, body: bodyString);
+                proxyRequest.GetRequest();
 
-            Console.WriteLine("Message received: " + bodyString);
-            Console.WriteLine("Message sent back: " + bodyString.GetType());
+                var proxyResponse = new ProxyResponse(reader: proxyReader, writer: writer, path: httpPath, type: httpType);
+                proxyResponse.GetResponse();
+            }
+            else
+            {
+                var pathParams = new PathParameters(port);
+                var pathDict = pathParams.pathDict;
+
+                var execute = new ResponsePath(writer, pathDict);
+                execute.ExecuteRequest(path: httpPath, type: httpType, requestBody: bodyString);    
+            }
 
             Console.WriteLine("Closing the connection.");
 
             reader.Close();
             writer.Close();
-            client.Close();
+            _client.Close();
         }
 
         public static void Main(string[] args)
         {
-            var port = 5000;
-            var listener = new TcpListener(IPAddress.Any, port);
-
+			var port = new Port();
+			var portNum = port.GetPort(args);
+            var listener = new TcpListener(IPAddress.Any, portNum);
             try
             {
-
                 listener.Start();
 
-                Console.WriteLine("Server running on port {0}", port);
+                Console.WriteLine("Server running on port {0}", portNum);
 
                 while (true)
                 {
                     var server = new Server(listener.AcceptTcpClient());
 
-                    var serverThread = new Thread(new ThreadStart(server.Conversation));
+                    var serverThread = new Thread(() => server.Conversation(portNum));
 
                     serverThread.Start();
                 }
@@ -90,4 +117,3 @@ namespace HTTPServerProject
 
         }
     }
-}
