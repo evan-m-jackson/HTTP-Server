@@ -31,7 +31,6 @@ jobs:
         bundle install
     - name: Acceptance Tests
       run:  |
-        nohup dotnet run --project HTTPServerProject &
         cd http-server-spec
         bundle exec rake acctest:f1
         bundle exec rake acctest:f2
