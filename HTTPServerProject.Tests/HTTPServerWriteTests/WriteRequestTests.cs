@@ -3,7 +3,6 @@ using HTTPServerRead.Body;
 using HTTPServerReadTests.Streams;
 using HTTPServerWriteTests.Streams;
 using HTTPServerWrite.Request;
-using HTTPServerProxyTests.Client;
 using HTTPServerWrite.Response;
 using HTTPServerProxy.Response;
 
@@ -41,8 +40,7 @@ public class UnitTestsWritingRequests
         var body = new Body(reader);
         var reqBody = body.GetBody();
 
-        var proxyClient = new TestProxyClient();
-        var proxyStream = proxyClient.GetStream();
+        var proxyStream = new List<string>();
         var writer = new TestWriteStreams(proxyStream);
 
         var proxyRequest = new WriteRequest(writer: writer, initialLine: initialLine, headers: reqHeaders, body: reqBody);

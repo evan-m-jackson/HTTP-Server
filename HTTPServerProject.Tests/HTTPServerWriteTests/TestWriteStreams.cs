@@ -2,9 +2,25 @@ using HTTPServerWrite.Streams;
 
 namespace HTTPServerWriteTests.Streams
 {
+    public class UnitTestsForWriteStreams
+    {
+        [Fact]
+        public void WriterIsClosedTest()
+        {
+            var stream = new List<string>();
+            var writer = new TestWriteStreams(stream);
+            writer.Close();
+            var writerHasClosed = writer.closeCalled;
+
+            Assert.True(writerHasClosed);
+        }    
+    }
+    
     public class TestWriteStreams : IWriteStreams
     {
         List<string> sArr = new List<string>();
+        public bool flushCalled = false;
+        public bool closeCalled = false;
 
         public TestWriteStreams(List<string> arr)
         {
@@ -37,10 +53,12 @@ namespace HTTPServerWriteTests.Streams
 
         public void Flush()
         {
+            flushCalled = true;
         }
 
         public void Close()
         {
+            closeCalled = true;
         }
     }
 }
