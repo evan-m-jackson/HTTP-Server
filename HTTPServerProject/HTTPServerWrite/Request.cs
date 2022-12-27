@@ -17,7 +17,7 @@ public class WriteRequest
         _body = body;
     }
 
-    public void GetRequest()
+    public void Run()
     {
         _writer.WriteLine(_initialLine);
         WriteRequestHeaders();

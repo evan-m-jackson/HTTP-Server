@@ -1,25 +1,11 @@
 using HTTPServerRead.Streams;
 
-namespace HTTPServerReadTests.Streams;
-
-public class UnitTestsForReadStreams
-    {
-        [Fact]
-        public void ReaderIsClosedTest()
-        {
-            var stream = new List<string>();
-            var reader = new TestReadStreams(stream);
-            reader.Close();
-            var readerHasClosed = reader.closeCalled;
-
-            Assert.True(readerHasClosed);
-        }    
-    }
+namespace HTTPServerProject.Tests;
 
 public class TestReadStreams : IReadStreams
 {
     List<string> sArr = new List<string>();
-	public bool closeCalled = false;	
+    public bool closeCalled = false;
 
     public TestReadStreams(List<string> arr)
     {
@@ -99,6 +85,6 @@ public class TestReadStreams : IReadStreams
 
     public void Close()
     {
-		closeCalled = true;
+        closeCalled = true;
     }
 }

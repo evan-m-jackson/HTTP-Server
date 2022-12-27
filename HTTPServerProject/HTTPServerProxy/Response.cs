@@ -25,7 +25,7 @@ public class ProxyResponse
         _type = type;
     }
 
-    public void GetResponse()
+    public void Run()
     {
         var code = GetStatusCode();
         var headers = GetHeaders();
@@ -35,31 +35,27 @@ public class ProxyResponse
         if (_type == "DELETE")
         {
             var response = new WriteResponse(_writer, status);
-            response.GetResponse();
+            response.Run();
         }
-        else
+        else if (code == 200)
         {
-            if (code == 200)
+            var contentLength = GetContentLength(headers);
+            GetFullJSONContentType(headers);
+            if (contentLength > 2)
             {
-                
-                var contentLength = GetContentLength(headers);
-                GetFullJSONContentType(headers);
-                if (contentLength > 2)
-                {
-                    var response = new WriteResponse(writer: _writer, code: status, body: body, headers: headers);
-                    response.GetResponse();
-                }
-                else
-                {
-                    var response = new WriteResponse(_writer, 400);
-                    response.GetResponse();
-                }
+                var response = new WriteResponse(writer: _writer, code: status, body: body, headers: headers);
+                response.Run();
             }
             else
             {
-                var response = new WriteResponse(_writer, code);
-                response.GetResponse();
+                var response = new WriteResponse(_writer, 400);
+                response.Run();
             }
+        }
+        else
+        {
+            var response = new WriteResponse(_writer, code);
+            response.Run();
         }
     }
     

@@ -14,7 +14,7 @@ namespace HTTPServerResponse.Path;
             _dict = dict;
         }
 
-        public void ExecuteRequest(string path, string type, string requestBody)
+        public void Execute(string path, string type, string requestBody)
         {
             if (_dict.ContainsKey(path))
             {
@@ -26,30 +26,30 @@ namespace HTTPServerResponse.Path;
                 string body = (string)paramDict["Body"];
 
                 var response = new WriteResponse(writer: _writer, code: code, body: body, headers: headers);
-                response.GetResponse();
+                response.Run();
                 }
                 else
                 {
                     var response = new WriteResponse(writer: _writer, code: 405, body: "");
-                    response.GetResponse();
+                    response.Run();
                 }
             }
 
             else if (path == "echo_body")
             {
                 var response = new WriteResponse(writer: _writer, code: 200, body: requestBody);
-                response.GetResponse();
+                response.Run();
             }
 
             else if (path == "")
             {
                 var response = new WriteResponse(_writer, 200);
-                response.GetResponse();
+                response.Run();
             }
             else
             {
                 var response = new WriteResponse(_writer, 404);
-                response.GetResponse();
+                response.Run();
             }
         }
 

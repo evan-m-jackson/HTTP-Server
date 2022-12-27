@@ -1,9 +1,8 @@
-using HTTPServerWriteTests.Streams;
 using HTTPServerWrite.Response;
 
-namespace HTTPServerWriteTests.ResponseTests;
+namespace HTTPServerProject.Tests;
 
-public class UnitTestsForWritingResponses
+public class UnitTestsWritingResponses
 {
     public List<string> eStream = new List<string>();
 
@@ -12,15 +11,15 @@ public class UnitTestsForWritingResponses
     {
         var expected = new List<string>()
         {
-            "HTTP/1.1 200 OK", 
-            "", 
+            "HTTP/1.1 200 OK",
+            "",
             "Hello World!"
         };
         var writer = new TestWriteStreams(eStream);
         var body = "Hello World!";
 
         var response = new WriteResponse(writer: writer, code: 200, body: body);
-        response.GetResponse();
+        response.Run();
 
         Assert.Equal(eStream, expected);
     }
@@ -30,9 +29,9 @@ public class UnitTestsForWritingResponses
     {
         var expected = new List<string>()
         {
-            "HTTP/1.1 200 OK", 
-            "Location: Earth", 
-            "", 
+            "HTTP/1.1 200 OK",
+            "Location: Earth",
+            "",
             "Hello World!"
         };
         var writer = new TestWriteStreams(eStream);
@@ -40,19 +39,19 @@ public class UnitTestsForWritingResponses
         var body = "Hello World!";
 
         var response = new WriteResponse(writer: writer, code: 200, body: body, headers: headers);
-        response.GetResponse();
+        response.Run();
 
         Assert.Equal(eStream, expected);
     }
-    
+
     [Fact]
     public void WriteResponseAndFlushIsCalledTest()
     {
         var expected = new List<string>()
         {
-            "HTTP/1.1 200 OK", 
-            "Location: Earth", 
-            "", 
+            "HTTP/1.1 200 OK",
+            "Location: Earth",
+            "",
             "Hello World!"
         };
         var writer = new TestWriteStreams(eStream);
@@ -60,9 +59,9 @@ public class UnitTestsForWritingResponses
         var body = "Hello World!";
 
         var response = new WriteResponse(writer: writer, code: 200, body: body, headers: headers);
-        response.GetResponse();
+        response.Run();
         var flushCalled = writer.flushCalled;
-        
+
         Assert.True(flushCalled);
     }
 }

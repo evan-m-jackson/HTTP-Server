@@ -1,8 +1,7 @@
-using HTTPServerReadTests.Streams;
 using HTTPServerRead.Header;
 using HTTPServerRead.Body;
 
-namespace HTTPServerReadTests.BodyTest;
+namespace HTTPServerProject.Tests;
 
 public class UnitTestsForReadingBody
 {

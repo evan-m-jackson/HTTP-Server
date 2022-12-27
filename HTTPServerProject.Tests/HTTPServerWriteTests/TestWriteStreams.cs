@@ -1,64 +1,49 @@
 using HTTPServerWrite.Streams;
 
-namespace HTTPServerWriteTests.Streams
+namespace HTTPServerProject.Tests;
+
+public class TestWriteStreams : IWriteStreams
 {
-    public class UnitTestsForWriteStreams
-    {
-        [Fact]
-        public void WriterIsClosedTest()
-        {
-            var stream = new List<string>();
-            var writer = new TestWriteStreams(stream);
-            writer.Close();
-            var writerHasClosed = writer.closeCalled;
+    List<string> sArr = new List<string>();
+    public bool flushCalled = false;
+    public bool closeCalled = false;
 
-            Assert.True(writerHasClosed);
-        }    
+    public TestWriteStreams(List<string> arr)
+    {
+        sArr = arr;
     }
-    
-    public class TestWriteStreams : IWriteStreams
+
+    public void Write(string str = default!)
     {
-        List<string> sArr = new List<string>();
-        public bool flushCalled = false;
-        public bool closeCalled = false;
-
-        public TestWriteStreams(List<string> arr)
+        if (str == default!)
         {
-            sArr = arr;
+            sArr.Add("");
         }
-
-        public void Write(string str = default!)
+        else
         {
-            if (str == default!)
-            {
-                sArr.Add("");
-            }
-            else
-            {
-                sArr.Add(str);
-            }
+            sArr.Add(str);
         }
+    }
 
-        public void WriteLine(string str = default!)
+    public void WriteLine(string str = default!)
+    {
+        if (str == default!)
         {
-            if (str == default!)
-            {
-                sArr.Add("");
-            }
-            else
-            {
-                sArr.Add(str);
-            }
+            sArr.Add("");
         }
+        else
+        {
+            sArr.Add(str);
+        }
+    }
 
-        public void Flush()
-        {
-            flushCalled = true;
-        }
+    public void Flush()
+    {
+        flushCalled = true;
+    }
 
-        public void Close()
-        {
-            closeCalled = true;
-        }
+    public void Close()
+    {
+        closeCalled = true;
     }
 }

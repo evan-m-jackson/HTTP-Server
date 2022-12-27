@@ -1,6 +1,6 @@
 using HTTPServerResponse.StatusCode;
 
-namespace HTTPServerResponseTests.StatusCodeTests;
+namespace HTTPServerProject.Tests;
 
 public class UnitTestsForWritingResponses
 {

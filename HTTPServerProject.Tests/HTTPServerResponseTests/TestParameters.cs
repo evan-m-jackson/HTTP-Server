@@ -1,6 +1,6 @@
 using HTTPServerResponse.Parameters;
 
-namespace HTTPServerResponseTests.Parameters;
+namespace HTTPServerProject.Tests;
 
 public class TestPathParameters : IPathParameters
 {
@@ -91,5 +91,4 @@ public class TestPathParameters : IPathParameters
     {
         return "health-check.html";
     }
-
 }

@@ -9,20 +9,12 @@ namespace HTTPServerProject.Update.Initial.Line;
 
 public class UpdateInitialLine
 {
-    IReadStreams _reader;
-    IWriteStreams _writer;
-    Header _header;
-    Body _body;
     string _path;
     string _type;
-    IGetFirstID _firstId;
+    GetFirstID _firstId;
 
-    public UpdateInitialLine(IReadStreams reader, IWriteStreams writer, string path, string type, IGetFirstID firstId)
+    public UpdateInitialLine(string path, string type, GetFirstID firstId)
     {
-        _reader = reader;
-        _writer = writer;
-        _header = new Header(_reader);
-        _body = new Body(_reader);
         _path = path;
         _type = type;
         _firstId = firstId;
@@ -32,7 +24,7 @@ public class UpdateInitialLine
     {
         if (_path == "todo/1")
         {
-            var id = _firstId.GetFirstIndex();
+            var id = _firstId.Run();
             _path = _path.Replace("todo/1", $"todo/{id}");
         }
 
@@ -41,13 +33,13 @@ public class UpdateInitialLine
             _path = _path.Replace("todo", "todo-delete");
         }
 
-        var initialLine = GetInitialLine(_type, _path);
+        var initialLine = GetInitialLine();
         return initialLine;
     }
 
-    public string GetInitialLine(string type, string path)
+    public string GetInitialLine()
     {
-        var result = _firstId.GetInitialLine(type, path);
+        var result = $"{_type} /{_path} HTTP/1.1";
         return result;
     }
 }

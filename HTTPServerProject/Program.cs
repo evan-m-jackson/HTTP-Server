@@ -15,9 +15,9 @@ using HTTPServerResponse.Path;
 using HTTPServerResponse.Parameters;
 using HTTPServerWrite.Request;
 using HTTPServerProxy.Check.Paths;
-using HTTPServerProxy.Client;
 using HTTPServerProxy.Response;
 using HTTPServerProxy.FirstID;
+using HTTPServerProxy.TodoList;
 
 namespace HTTPServerProject;
 
@@ -54,28 +54,31 @@ namespace HTTPServerProject;
 
             if (isProxyPath)
             {
-                var proxyClient = new ProxyClient();
+                var proxyClient = new TcpClient("127.0.0.1", 8000);
                 var proxyStream = proxyClient.GetStream();
                 var proxyWriter = new WriteStreams(proxyStream);
                 var proxyReader = new ReadStreams(proxyStream);
-
-				var firstId = new GetFirstID(reader: proxyReader, writer: proxyWriter, path: httpPath, type: httpType);
-				var updateIL = new UpdateInitialLine(reader: proxyReader, writer: proxyWriter, path: httpPath, type: httpType, firstId: firstId);
+				
+				var todoList = new TodoList(proxyReader, proxyWriter);
+				var listString = todoList.GetString(); 
+				
+				var firstId = new GetFirstID(listString);
+				var updateIL = new UpdateInitialLine(path: httpPath, type: httpType, firstId: firstId);
 				initialLine = updateIL.Run();
 				
                 var proxyRequest = new WriteRequest(writer: proxyWriter, initialLine: initialLine, headers: rHeader, body: bodyString);
-                proxyRequest.GetRequest();
+                proxyRequest.Run();
 
                 var proxyResponse = new ProxyResponse(reader: proxyReader, writer: writer, path: httpPath, type: httpType);
-                proxyResponse.GetResponse();
+                proxyResponse.Run();
             }
             else
             {
                 var pathParams = new PathParameters(port);
                 var pathDict = pathParams.pathDict;
 
-                var execute = new ResponsePath(writer, pathDict);
-                execute.ExecuteRequest(path: httpPath, type: httpType, requestBody: bodyString);    
+                var responseByPath = new ResponsePath(writer, pathDict);
+                responseByPath.Execute(path: httpPath, type: httpType, requestBody: bodyString);    
             }
 
             Console.WriteLine("Closing the connection.");

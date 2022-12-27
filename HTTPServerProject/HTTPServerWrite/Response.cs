@@ -17,7 +17,7 @@ namespace HTTPServerWrite.Response;
             _body = body;
             _headers = headers;
         }
-        public void GetResponse()
+        public void Run()
         {
             WriteResponseStatusCode();
             WriteResponseHeaders();
