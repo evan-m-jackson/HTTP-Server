@@ -1,5 +1,7 @@
 namespace HTTPServerResponse.Parameters;
 
+using PathLookUp = Dictionary<string, Dictionary<string, Dictionary<string, object>>>;
+
 public interface IPathParameters
 {
     Dictionary<string, Dictionary<string, object>> GetTypeDict(string type, int code, List<string> headers, string body);
@@ -7,7 +9,7 @@ public interface IPathParameters
 }
 public class PathParameters : IPathParameters
 {
-    public Dictionary<string, Dictionary<string, Dictionary<string, object>>> pathDict = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
+    public PathLookUp pathDict = new PathLookUp();
     int port;
     public PathParameters(int port)
     {

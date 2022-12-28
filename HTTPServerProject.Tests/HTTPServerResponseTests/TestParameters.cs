@@ -2,9 +2,10 @@ using HTTPServerResponse.Parameters;
 
 namespace HTTPServerProject.Tests;
 
+using PathLookUp = Dictionary<string, Dictionary<string, Dictionary<string, object>>>;
 public class TestPathParameters : IPathParameters
 {
-    public Dictionary<string, Dictionary<string, Dictionary<string, object>>> pathDict = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
+    public PathLookUp pathDict = new PathLookUp();
     int port;
     public TestPathParameters(int port = 5000)
     {
