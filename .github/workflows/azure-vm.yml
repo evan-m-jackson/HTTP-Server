@@ -28,7 +28,7 @@ jobs:
         run: dotnet publish -c Release -r linux-x64 --self-contained true
         working-directory: HTTPServerProject
 
-      - name: Run a multi-line script
+      - name: Tar up the build
         run: |
           mkdir ../build
           cp -R . ../build

@@ -21,3 +21,6 @@ Alternatively, navigate to the Tests sub-directory and type in the 'dotnet test'
     cd HTTPServerProject.Tests
     dotnet test
 
+In order to run the acceptance tests, go into the 'http-server-spec' directory [here](https://github.com/evan-m-jackson/HTTP-Server/blob/6a0efb7af2c333f282801496616eb8063dc5b0d9/http-server-spec) and follow the README.
+
+For the last section of acceptance tests, another Django server needs to be run. The instructions for this Django server can be found [here](https://github.com/evan-m-jackson/Todo-List-API).

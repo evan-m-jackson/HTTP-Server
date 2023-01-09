@@ -2,11 +2,9 @@ namespace HTTPServerProject.Tests.Integration;
 
 public class IntegrationTestForServer
 {
-
     [Fact]
     public void TestStartupConnectAndShutdown()
     {
-
         var serverThread = new Thread(new ThreadStart(RunServer));
 
         var expected = "What's up?";
@@ -19,7 +17,6 @@ public class IntegrationTestForServer
         clientThread.Join();
 
         Assert.Equal(expected, result);
-
     }
 
     private static void RunServer()
@@ -41,6 +38,4 @@ public class IntegrationTestForServer
 
         return input;
     }
-
-
 }
